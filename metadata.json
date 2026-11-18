@@ -1,0 +1,6 @@
+{
+  "name": "FLORDE.ZAR — Custom Papan Bunga Padang",
+  "description": "Website interaktif custom papan bunga ucapan bergaya dress-up game & digital invoice untuk UMKM FLORDE.ZAR Padang (From Heart to Bloom).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

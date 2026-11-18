@@ -1,0 +1,2664 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FLORDE.ZAR — Custom Papan Bunga Padang | From Heart to Bloom</title>
+  <meta name="description" content="Mainkan game custom papan bunga ucapan FLORDE.ZAR Padang (From Heart to Bloom). Pilih 11 model katalog, atur warna, tulis ucapan real-time, cetak invoice PNG & order via WhatsApp." />
+  <meta property="og:title" content="FLORDE.ZAR — Custom Papan Bunga Padang" />
+  <meta property="og:description" content="Rangkai papan bunga ucapan favoritmu secara interaktif bergaya dress-up game bersama FLORDE.ZAR Padang." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Fredoka', 'ui-rounded', 'system-ui', 'sans-serif'],
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            cream: '#FFF8F3',
+            coral: '#FF6B8B',
+            sunny: '#FFD166',
+            sage: '#2D6A4F',
+            wa: '#25D366',
+            berry: '#3B1D2A',
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- html2canvas via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+  <style>
+    :root {
+      --bg-cream: #FFF8F3;
+      --accent-coral: #FF6B8B;
+      --accent-sunny: #FFD166;
+      --accent-sage: #2D6A4F;
+      --accent-wa: #25D366;
+      --ink-berry: #3B1D2A;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background-color: #0E4B27;
+      color: var(--ink-berry);
+      background-image:
+        radial-gradient(circle at 86% 84%, rgba(255, 107, 139, 0.22) 0%, transparent 42%),
+        radial-gradient(circle at 12% 14%, rgba(22, 101, 56, 0.45) 0%, transparent 45%),
+        linear-gradient(160deg, #0E4B27 0%, #176238 25%, #55916E 50%, #EABCC9 74%, #FAD5E0 89%, #FFE8F0 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, .font-display {
+      font-family: 'Fredoka', ui-rounded, system-ui, sans-serif;
+    }
+
+    /* Casual Game 3D Soft Tactile Buttons */
+    .btn-game {
+      font-family: 'Fredoka', ui-rounded, system-ui, sans-serif;
+      transition: transform 140ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 140ms cubic-bezier(0.16, 1, 0.3, 1), filter 140ms ease;
+      box-shadow: 0 4px 0 rgba(59, 29, 42, 0.18);
+    }
+    .btn-game:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+    }
+    .btn-game:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 rgba(59, 29, 42, 0.22);
+    }
+
+    .btn-coral {
+      background-color: #FF6B8B;
+      color: #FFFFFF;
+      box-shadow: 0 4px 0 #D9486A;
+    }
+    .btn-coral:active {
+      box-shadow: 0 1px 0 #D9486A;
+    }
+
+    .btn-sunny {
+      background-color: #FFD166;
+      color: #3B1D2A;
+      box-shadow: 0 4px 0 #E0A92D;
+    }
+    .btn-sunny:active {
+      box-shadow: 0 1px 0 #E0A92D;
+    }
+
+    .btn-sage {
+      background-color: #2D6A4F;
+      color: #FFFFFF;
+      box-shadow: 0 4px 0 #1B4332;
+    }
+    .btn-sage:active {
+      box-shadow: 0 1px 0 #1B4332;
+    }
+
+    .btn-wa {
+      background-color: #25D366;
+      color: #FFFFFF;
+      box-shadow: 0 5px 0 #169C49;
+    }
+    .btn-wa:active {
+      box-shadow: 0 1px 0 #169C49;
+    }
+
+    /* Stage Pop/Bounce Animation */
+    @keyframes boardPop {
+      0% { transform: scale(0.9) translateY(8px); opacity: 0.75; }
+      55% { transform: scale(1.035) translateY(-4px); opacity: 1; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .animate-board-pop {
+      animation: boardPop 340ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-origin: center bottom;
+    }
+
+    @keyframes pricePop {
+      0% { transform: scale(0.92); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+    .animate-price-pop {
+      animation: pricePop 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(0.8) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1.15) rotate(12deg); }
+    }
+    .sparkle-star {
+      animation: twinkle 2.6s ease-in-out infinite;
+    }
+    .sparkle-delay-1 { animation-delay: 0.5s; }
+    .sparkle-delay-2 { animation-delay: 1.2s; }
+    .sparkle-delay-3 { animation-delay: 1.8s; }
+
+    /* Custom Scrollbar for horizontal wardrobe tabs */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-board-pop, .animate-price-pop, .sparkle-star {
+        animation: none !important;
+      }
+      .btn-game { transition: none !important; }
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-coral/20 selection:text-berry relative">
+
+  <!-- BOTANICAL LEAF & PETAL PATTERN OVERLAY (ALA PDF CATALOG FLORDE.ZAR) -->
+  <div id="botanical-bg-pattern" aria-hidden="true" class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <pattern id="fdz-leaf-pattern" width="220" height="220" patternUnits="userSpaceOnUse">
+          <!-- Subtle Catalog Petal Swirl Motif -->
+          <path d="M 48 44 C 58 24, 82 28, 76 48 C 94 48, 94 74, 72 74 C 76 92, 52 98, 44 80 C 26 88, 16 66, 32 54 C 20 38, 38 26, 48 44 Z" fill="none" stroke="#FFFFFF" stroke-width="2.5" opacity="0.11"/>
+          <path d="M 164 132 C 176 114, 198 122, 188 140 C 204 146, 198 170, 178 166 C 174 184, 152 182, 150 164 C 132 164, 128 142, 144 134 C 138 118, 156 112, 164 132 Z" fill="#072D17" opacity="0.11"/>
+          <!-- Delicate Botanical Leaf Sprig -->
+          <path d="M 145 48 Q 162 32 178 40 Q 166 58 145 48 Z" fill="#FFFFFF" opacity="0.09"/>
+          <path d="M 145 48 Q 152 24 166 16 Q 164 38 145 48 Z" fill="#FFFFFF" opacity="0.07"/>
+          <path d="M 38 162 Q 55 144 74 154 Q 58 172 38 162 Z" fill="#072D17" opacity="0.08"/>
+          <!-- Soft Halftone Dots (PDF Cover Accent) -->
+          <circle cx="110" cy="108" r="2.5" fill="#FFFFFF" opacity="0.12"/>
+          <circle cx="122" cy="100" r="2" fill="#FFFFFF" opacity="0.1"/>
+          <circle cx="116" cy="120" r="1.8" fill="#FFFFFF" opacity="0.1"/>
+          <circle cx="195" cy="78" r="2.2" fill="#072D17" opacity="0.08"/>
+          <circle cx="24" cy="118" r="2.2" fill="#FFFFFF" opacity="0.09"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#fdz-leaf-pattern)"/>
+    </svg>
+  </div>
+
+  <!-- TOP CHEERFUL HEADER -->
+  <header class="relative z-20 bg-white/95 backdrop-blur-md border-b-2 border-[#E8CFD8] shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+      <!-- Brand Identity -->
+      <div class="flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-[#FFE4EC] border-2 border-[#FF6B8B]/40 flex items-center justify-center shadow-sm shrink-0" aria-hidden="true">
+            <svg viewBox="0 0 40 40" class="w-7 h-7">
+              <circle cx="20" cy="20" r="16" fill="#2D6A4F"/>
+              <path d="M20 11 C23 7, 29 10, 26 15 C31 16, 30 23, 25 23 C26 28, 20 31, 18 26 C13 29, 9 24, 13 20 C9 16, 14 11, 18 14 C18 9, 20 11, 20 11 Z" fill="#FF8FA3"/>
+              <circle cx="20" cy="19.5" r="4.2" fill="#FFD166"/>
+            </svg>
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-berry leading-none">
+                FLORDE.ZAR <span aria-hidden="true">🌸</span>
+              </h1>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#FFD166] text-[#3B1D2A] border border-[#E0A92D]/50 whitespace-nowrap">
+                Booking Min. H-1
+              </span>
+            </div>
+            <p class="text-xs sm:text-sm font-medium text-[#7A5563] mt-0.5">
+              From Heart To Bloom • Padang
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mode Switcher Buttons -->
+      <nav aria-label="Navigasi Mode Aplikasi" class="flex flex-wrap items-center gap-2">
+        <button
+          id="mode-btn-customizer"
+          type="button"
+          onclick="switchAppMode('customizer')"
+          class="btn-game flex-1 sm:flex-none px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-[11px] sm:text-sm font-semibold whitespace-nowrap cursor-pointer min-h-[42px] flex items-center justify-center gap-1.5"
+        >
+          <span aria-hidden="true">🎮</span>
+          <span>Main Custom Papan</span>
+        </button>
+        <button
+          id="mode-btn-rekap"
+          type="button"
+          onclick="switchAppMode('rekap')"
+          class="btn-game flex-1 sm:flex-none px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-[11px] sm:text-sm font-semibold whitespace-nowrap cursor-pointer min-h-[42px] flex items-center justify-center gap-1.5"
+        >
+          <span aria-hidden="true">🧾</span>
+          <span>Rekap &amp; Input Invoice</span>
+          <span id="invoice-count-badge" class="ml-0.5 px-1.5 py-0.5 text-[10px] sm:text-[11px] rounded-full bg-white/80 text-berry font-bold tabular-nums">0</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- TOAST NOTIFICATION (No window.alert) -->
+  <div
+    id="toast-container"
+    aria-live="polite"
+    class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm pointer-events-none"
+  ></div>
+
+  <!-- ===================================================================== -->
+  <!-- MODE 1: MAIN CUSTOM PAPAN (DRESS-UP GAME INTERFACE)                   -->
+  <!-- ===================================================================== -->
+  <main id="view-customizer" class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-5 sm:py-7">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- LEFT COLUMN: STICKY LIVE STAGE -->
+      <section aria-label="Panggung Live Preview Papan Bunga" class="lg:col-span-5 lg:sticky lg:top-4 z-20">
+        <div class="bg-white rounded-3xl border-2 border-[#F3DCE4] shadow-[0_10px_30px_rgba(59,29,42,0.08)] overflow-hidden">
+          <!-- Stage Studio Header Bar -->
+          <div class="px-4 py-2.5 bg-[#FFF0F4] border-b border-[#F5DCE4] flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="text-xs font-bold text-[#9C4A63] uppercase tracking-wider whitespace-nowrap">Live Stage</span>
+              <span class="text-[#D4A7B6]" aria-hidden="true">•</span>
+              <span id="stage-model-name" class="font-display font-semibold text-sm text-berry truncate">Black Arch</span>
+            </div>
+            <div
+              id="stage-price-badge"
+              class="px-3 py-1 rounded-xl bg-[#2D6A4F] text-white font-display font-semibold text-xs sm:text-sm tabular-nums whitespace-nowrap shadow-sm"
+            >
+              Harga Sewa: Rp 99.000
+            </div>
+          </div>
+
+          <!-- Botanical Forest-Green to Pastel-Pink Studio Canvas -->
+          <div
+            id="live-stage-backdrop"
+            class="relative w-full flex items-center justify-center p-2.5 sm:p-5 overflow-hidden"
+            style="background: radial-gradient(circle at 50% 48%, rgba(255, 248, 243, 0.72) 0%, rgba(255, 248, 243, 0.14) 56%, transparent 82%), linear-gradient(175deg, #0E4B27 0%, #246A44 26%, #BDDAC8 52%, #FAD4DF 78%, #FFE7F0 100%);"
+          >
+            <!-- Subtle Botanical Corner Leaf Motif Inside Stage -->
+            <svg class="absolute -top-3 -left-3 w-28 h-28 text-[#062E16] opacity-20 pointer-events-none" viewBox="0 0 120 120" fill="currentColor" aria-hidden="true">
+              <path d="M12 18 C36 8, 56 26, 46 52 C68 48, 76 74, 52 84 C32 78, 12 48, 12 18 Z"/>
+              <path d="M52 10 C72 6, 84 22, 72 38 C56 34, 48 22, 52 10 Z" opacity="0.7"/>
+            </svg>
+            <svg class="absolute -bottom-3 -right-3 w-28 h-28 text-[#FF6B8B] opacity-20 pointer-events-none" viewBox="0 0 120 120" fill="currentColor" aria-hidden="true">
+              <path d="M108 102 C84 112, 64 94, 74 68 C52 72, 44 46, 68 36 C88 42, 108 72, 108 102 Z"/>
+            </svg>
+
+            <!-- Decorative Sparkles -->
+            <svg class="sparkle-star absolute top-4 left-5 w-5 h-5 text-[#FFD166] pointer-events-none" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2L14.3 9.7L22 12L14.3 14.3L12 22L9.7 14.3L2 12L9.7 9.7L12 2Z"/>
+            </svg>
+            <svg class="sparkle-star sparkle-delay-1 absolute top-10 right-6 w-4 h-4 text-[#FFE4EC] pointer-events-none" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2L14.3 9.7L22 12L14.3 14.3L12 22L9.7 14.3L2 12L9.7 9.7L12 2Z"/>
+            </svg>
+            <svg class="sparkle-star sparkle-delay-2 absolute bottom-12 left-7 w-4 h-4 text-[#2D6A4F]/60 pointer-events-none" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2L14.3 9.7L22 12L14.3 14.3L12 22L9.7 14.3L2 12L9.7 9.7L12 2Z"/>
+            </svg>
+            <svg class="sparkle-star sparkle-delay-3 absolute bottom-14 right-8 w-5 h-5 text-[#FFD166] pointer-events-none" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2L14.3 9.7L22 12L14.3 14.3L12 22L9.7 14.3L2 12L9.7 9.7L12 2Z"/>
+            </svg>
+
+            <!-- Layered Inline SVG Board Stage -->
+            <div id="stage-svg-wrapper" class="relative z-10 w-full max-w-[205px] sm:max-w-[285px] lg:max-w-[350px] mx-auto">
+              <!-- SVG injected dynamically by JS -->
+            </div>
+          </div>
+
+          <!-- Stage Quick Info Footer -->
+          <div class="px-4 py-2.5 bg-white border-t border-[#F5E1D8] flex items-center justify-between gap-2 text-xs text-[#7A5563]">
+            <span id="stage-summary-meta" class="truncate font-medium">Papan Lengkung Hitam • Tanpa Add-On</span>
+            <button
+              type="button"
+              onclick="resetCustomToCatalog()"
+              class="text-coral hover:text-[#D9486A] font-semibold whitespace-nowrap cursor-pointer underline-offset-2 hover:underline py-1 px-1.5"
+            >
+              ↺ Reset Katalog
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: WARDROBE CUSTOMIZER TABS -->
+      <section aria-label="Menu Customizer Papan Bunga" class="lg:col-span-7">
+        <!-- Wardrobe Tabs (Wrapped cleanly so all 5 tabs stay visible on Desktop & Mobile) -->
+        <div
+          role="tablist"
+          aria-label="Tahap Custom Papan Bunga"
+          class="flex flex-wrap items-center gap-2 pb-1 mb-3"
+        >
+          <button
+            role="tab"
+            id="tab-btn-catalog"
+            aria-selected="true"
+            aria-controls="tab-panel-catalog"
+            type="button"
+            onclick="switchWardrobeTab('catalog')"
+            class="btn-game px-3 py-2 rounded-2xl text-xs sm:text-[13px] font-semibold whitespace-nowrap shrink-0 cursor-pointer min-h-[42px] flex items-center gap-1.5"
+          >
+            <span aria-hidden="true">💐</span>
+            <span>Pilih Model Katalog</span>
+          </button>
+          <button
+            role="tab"
+            id="tab-btn-colors"
+            aria-selected="false"
+            aria-controls="tab-panel-colors"
+            type="button"
+            onclick="switchWardrobeTab('colors')"
+            class="btn-game px-3 py-2 rounded-2xl text-xs sm:text-[13px] font-semibold whitespace-nowrap shrink-0 cursor-pointer min-h-[42px] flex items-center gap-1.5"
+          >
+            <span aria-hidden="true">🎨</span>
+            <span>Custom Warna &amp; Bunga</span>
+          </button>
+          <button
+            role="tab"
+            id="tab-btn-text"
+            aria-selected="false"
+            aria-controls="tab-panel-text"
+            type="button"
+            onclick="switchWardrobeTab('text')"
+            class="btn-game px-3 py-2 rounded-2xl text-xs sm:text-[13px] font-semibold whitespace-nowrap shrink-0 cursor-pointer min-h-[42px] flex items-center gap-1.5"
+          >
+            <span aria-hidden="true">✍️</span>
+            <span>Tulis Ucapan</span>
+          </button>
+          <button
+            role="tab"
+            id="tab-btn-addons"
+            aria-selected="false"
+            aria-controls="tab-panel-addons"
+            type="button"
+            onclick="switchWardrobeTab('addons')"
+            class="btn-game px-3 py-2 rounded-2xl text-xs sm:text-[13px] font-semibold whitespace-nowrap shrink-0 cursor-pointer min-h-[42px] flex items-center gap-1.5"
+          >
+            <span aria-hidden="true">✨</span>
+            <span>Stiker &amp; Add-Ons</span>
+          </button>
+          <button
+            role="tab"
+            id="tab-btn-checkout"
+            aria-selected="false"
+            aria-controls="tab-panel-checkout"
+            type="button"
+            onclick="switchWardrobeTab('checkout')"
+            class="btn-game px-3 py-2 rounded-2xl text-xs sm:text-[13px] font-semibold whitespace-nowrap shrink-0 cursor-pointer min-h-[42px] flex items-center gap-1.5"
+          >
+            <span aria-hidden="true">🚀</span>
+            <span>Checkout &amp; Digital Invoice</span>
+          </button>
+        </div>
+
+        <!-- TAB PANEL CONTAINER -->
+        <div class="bg-white rounded-3xl border-2 border-[#F3DCE4] shadow-[0_8px_24px_rgba(59,29,42,0.06)] p-4 sm:p-6">
+
+          <!-- TAB 1: PILIH MODEL KATALOG -->
+          <div id="tab-panel-catalog" role="tabpanel" aria-labelledby="tab-btn-catalog">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+              <div>
+                <h2 class="font-display text-lg sm:text-xl font-bold text-berry">Pilih Model Papan Katalog</h2>
+                <p class="text-xs sm:text-sm text-[#7A5563]">11 model asli FLORDE.ZAR siap dirangkai sesuai acaramu!</p>
+              </div>
+              <button
+                type="button"
+                onclick="switchWardrobeTab('colors')"
+                class="btn-game btn-sunny px-3.5 py-2 rounded-xl text-xs font-semibold cursor-pointer"
+              >
+                Lanjut Atur Warna →
+              </button>
+            </div>
+            <div id="catalog-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- TAB 2: CUSTOM WARNA & BUNGA -->
+          <div id="tab-panel-colors" role="tabpanel" aria-labelledby="tab-btn-colors" class="hidden space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h2 class="font-display text-lg sm:text-xl font-bold text-berry">Custom Warna Papan, Bunga &amp; Pita</h2>
+                <p class="text-xs sm:text-sm text-[#7A5563]">Mix &amp; match warna sesuka hati seperti game dress-up!</p>
+              </div>
+              <button
+                type="button"
+                onclick="switchWardrobeTab('text')"
+                class="btn-game btn-sunny px-3.5 py-2 rounded-xl text-xs font-semibold cursor-pointer"
+              >
+                Lanjut Tulis Ucapan →
+              </button>
+            </div>
+
+            <!-- Board Base Color -->
+            <div>
+              <div class="flex items-center justify-between mb-2.5">
+                <label class="font-display font-semibold text-sm text-berry">1. Warna Dasar Papan</label>
+                <div class="flex items-center gap-2">
+                  <label for="custom-board-color-picker" class="text-xs text-[#7A5563]">Bebas pilih:</label>
+                  <input
+                    id="custom-board-color-picker"
+                    type="color"
+                    value="#1A1A1D"
+                    oninput="setBoardColor(this.value)"
+                    class="w-8 h-8 rounded-lg border border-[#E5C9D3] cursor-pointer bg-transparent"
+                    aria-label="Pilih warna dasar papan bebas"
+                  />
+                </div>
+              </div>
+              <div id="board-color-swatches" class="grid grid-cols-4 sm:grid-cols-8 gap-2.5">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <!-- Flower Theme -->
+            <div>
+              <p class="font-display font-semibold text-sm text-berry mb-2.5">2. Tema Warna Rangkaian Bunga</p>
+              <div id="flower-theme-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <!-- Ribbon / Tulle Color -->
+            <div>
+              <p class="font-display font-semibold text-sm text-berry mb-2.5">3. Warna Pita &amp; Kain Tile</p>
+              <div id="ribbon-color-grid" class="flex flex-wrap gap-2">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: TULIS UCAPAN -->
+          <div id="tab-panel-text" role="tabpanel" aria-labelledby="tab-btn-text" class="hidden space-y-5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h2 class="font-display text-lg sm:text-xl font-bold text-berry">Tulis Ucapan Real-Time</h2>
+                <p class="text-xs sm:text-sm text-[#7A5563]">Warna teks otomatis kontras dengan warna papan yang dipilih.</p>
+              </div>
+              <button
+                type="button"
+                onclick="switchWardrobeTab('addons')"
+                class="btn-game btn-sunny px-3.5 py-2 rounded-xl text-xs font-semibold cursor-pointer"
+              >
+                Lanjut Stiker &amp; Add-Ons →
+              </button>
+            </div>
+
+            <!-- Quick Templates -->
+            <div>
+              <p class="font-display font-semibold text-sm text-berry mb-2">Template Ucapan Cepat</p>
+              <div id="greeting-templates" class="flex flex-wrap gap-2">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <!-- Text Inputs -->
+            <div class="grid grid-cols-1 gap-4">
+              <div>
+                <label for="input-header-text" class="block text-sm font-semibold text-berry mb-1">Header Ucapan</label>
+                <input
+                  id="input-header-text"
+                  type="text"
+                  maxlength="36"
+                  oninput="updateGreetingText('headerText', this.value)"
+                  placeholder="Contoh: Happy Wedding"
+                  class="w-full px-4 py-2.5 rounded-2xl border-2 border-[#F0D8E0] focus:border-[#FF6B8B] focus:outline-none text-sm font-medium bg-[#FFFDFB]"
+                />
+              </div>
+              <div>
+                <label for="input-recipient-text" class="block text-sm font-semibold text-berry mb-1">Nama Penerima / Mempelai</label>
+                <input
+                  id="input-recipient-text"
+                  type="text"
+                  maxlength="48"
+                  oninput="updateGreetingText('recipientText', this.value)"
+                  placeholder="Contoh: Raka &amp; Nisa"
+                  class="w-full px-4 py-2.5 rounded-2xl border-2 border-[#F0D8E0] focus:border-[#FF6B8B] focus:outline-none text-sm font-medium bg-[#FFFDFB]"
+                />
+              </div>
+              <div>
+                <label for="input-sender-text" class="block text-sm font-semibold text-berry mb-1">Nama Pengirim / Instansi</label>
+                <input
+                  id="input-sender-text"
+                  type="text"
+                  maxlength="52"
+                  oninput="updateGreetingText('senderText', this.value)"
+                  placeholder="Contoh: Keluarga Besar &amp; Sahabat"
+                  class="w-full px-4 py-2.5 rounded-2xl border-2 border-[#F0D8E0] focus:border-[#FF6B8B] focus:outline-none text-sm font-medium bg-[#FFFDFB]"
+                />
+              </div>
+            </div>
+
+            <!-- Font Style Selector -->
+            <div>
+              <p class="font-display font-semibold text-sm text-berry mb-2">Gaya Font Tulisan di Papan</p>
+              <div id="font-style-grid" class="grid grid-cols-3 gap-2.5">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: STIKER & ADD-ONS -->
+          <div id="tab-panel-addons" role="tabpanel" aria-labelledby="tab-btn-addons" class="hidden space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h2 class="font-display text-lg sm:text-xl font-bold text-berry">Stiker Manis &amp; Add-Ons Spesial</h2>
+                <p class="text-xs sm:text-sm text-[#7A5563]">Tambahkan hiasan ekstra langsung ke papan bungamu!</p>
+              </div>
+              <button
+                type="button"
+                onclick="switchWardrobeTab('checkout')"
+                class="btn-game btn-coral px-3.5 py-2 rounded-xl text-xs font-semibold cursor-pointer"
+              >
+                Lanjut Checkout &amp; Invoice →
+              </button>
+            </div>
+
+            <!-- Free Stickers -->
+            <div>
+              <p class="font-display font-semibold text-sm text-berry mb-2.5">Stiker Dekoratif Gratis (Rp 0)</p>
+              <div id="stickers-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <!-- Paid Add-ons -->
+            <div>
+              <p class="font-display font-semibold text-sm text-berry mb-2.5">Add-Ons Berbayar</p>
+              <div id="addons-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 5: CHECKOUT & DIGITAL INVOICE -->
+          <div id="tab-panel-checkout" role="tabpanel" aria-labelledby="tab-btn-checkout" class="hidden space-y-6">
+            <div>
+              <h2 class="font-display text-lg sm:text-xl font-bold text-berry">Data Pemesan &amp; Digital Invoice</h2>
+              <p class="text-xs sm:text-sm text-[#7A5563]">Lengkapi data acara area Padang untuk cetak invoice PNG dan kirim pesanan ke WhatsApp admin.</p>
+            </div>
+
+            <!-- Customer Form -->
+            <form id="checkout-form" onsubmit="handleCheckoutSubmit(event)" novalidate class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div>
+                  <label for="cust-name" class="block text-xs font-bold text-berry mb-1">Nama Pemesan *</label>
+                  <input
+                    id="cust-name"
+                    type="text"
+                    oninput="updateCustomerField('customerName', this.value)"
+                    placeholder="Contoh: Nadia Putri"
+                    class="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#F0D8E0] focus:border-[#FF6B8B] focus:outline-none text-sm bg-[#FFFDFB]"
+                  />
+                  <p id="err-cust-name" class="text-xs text-[#C81E4A] font-medium mt-1 hidden"></p>
+                </div>
+                <div>
+                  <label for="cust-phone" class="block text-xs font-bold text-berry mb-1">No. WhatsApp Pemesan *</label>
+                  <input
+                    id="cust-phone"
+                    type="tel"
+                    oninput="updateCustomerField('customerPhone', this.value)"
+                    placeholder="Contoh: 081234567890"
+                    class="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#F0D8E0] focus:border-[#FF6B8B] focus:outline-none text-sm bg-[#FFFDFB]"
+                  />
+                  <p id="err-cust-phone" class="text-xs text-[#C81E4A] font-medium mt-1 hidden"></p>
+                </div>
+              </div>
+
+              <div>
+                <label for="cust-datetime" class="block text-xs font-bold text-berry mb-1">Tanggal &amp; Jam Acara *</label>
+                <input
+                  id="cust-datetime"
+                  type="text"
+                  oninput="updateCustomerField('eventDateTime', this.value)"
+                  placeholder="Contoh: Minggu, 22 Nov 2026 • Jam 09.00 WIB"
+                  class="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#F0D8E0] focus:border-[#FF6B8B] focus:outline-none text-sm bg-[#FFFDFB]"
+                />
+                <p id="err-cust-datetime" class="text-xs text-[#C81E4A] font-medium mt-1 hidden"></p>
+              </div>
+
+              <div>
+                <label for="cust-address" class="block text-xs font-bold text-berry mb-1">Alamat Lengkap Pengiriman (Area Padang) *</label>
+                <textarea
+                  id="cust-address"
+                  rows="2"
+                  oninput="updateCustomerField('deliveryAddress', this.value)"
+                  placeholder="Contoh: Gedung UPI Convention Center, Jl. Raya Lubuk Begalung, Padang"
+                  class="w-full px-3.5 py-2 rounded-xl border-2 border-[#F0D8E0] focus:border-[#FF6B8B] focus:outline-none text-sm bg-[#FFFDFB]"
+                ></textarea>
+                <p id="err-cust-address" class="text-xs text-[#C81E4A] font-medium mt-1 hidden"></p>
+              </div>
+
+              <!-- DIGITAL INVOICE CARD (Captured by html2canvas) -->
+              <div id="digital-invoice-capture" class="rounded-3xl border-2 border-dashed border-[#E8B8C7] bg-[#FFFDFB] p-4 sm:p-5 space-y-4">
+                <!-- Populated live by JS -->
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                <button
+                  type="button"
+                  id="btn-download-invoice-png"
+                  onclick="downloadInvoicePng('digital-invoice-capture', state.previewInvoiceNumber)"
+                  class="btn-game btn-sunny px-4 py-3.5 rounded-2xl text-sm font-bold cursor-pointer min-h-[48px] flex items-center justify-center gap-2"
+                >
+                  <span aria-hidden="true">📸</span>
+                  <span>Simpan Gambar Invoice (PNG)</span>
+                </button>
+                <button
+                  type="submit"
+                  class="btn-game btn-wa px-4 py-3.5 rounded-2xl text-sm font-bold cursor-pointer min-h-[48px] flex items-center justify-center gap-2"
+                >
+                  <span aria-hidden="true">💬</span>
+                  <span>Order &amp; Kirim Invoice ke WhatsApp</span>
+                </button>
+              </div>
+            </form>
+
+            <!-- WhatsApp Order Ready Confirmation Box (Safe for iframe & standalone) -->
+            <div id="checkout-wa-ready" class="hidden rounded-2xl bg-[#ECFDF3] border-2 border-[#25D366]/40 p-4 space-y-3">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <h3 class="font-display font-bold text-base text-[#1B4332]">Invoice Tersimpan &amp; Siap Dikirim!</h3>
+                  <p id="checkout-wa-ready-sub" class="text-xs text-[#2D6A4F] mt-0.5"></p>
+                </div>
+              </div>
+              <div class="flex flex-wrap gap-2.5">
+                <a
+                  id="checkout-wa-direct-link"
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-game btn-wa px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold inline-flex items-center gap-1.5"
+                >
+                  <span>Buka WhatsApp Admin</span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+                <button
+                  type="button"
+                  onclick="copyLastWhatsAppMessage()"
+                  class="btn-game bg-white border border-[#2D6A4F]/30 text-[#1B4332] px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold cursor-pointer"
+                >
+                  Salin Teks Order
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- MODE 2: REKAP & INPUT INVOICE (ADMIN / OWNER)                         -->
+  <!-- ===================================================================== -->
+  <main id="view-rekap" class="hidden relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- LEFT COLUMN: ADMIN MANUAL INVOICE ENTRY FORM -->
+      <section aria-label="Form Input Invoice Manual Admin" class="lg:col-span-5 bg-white rounded-3xl border-2 border-[#F3DCE4] shadow-[0_8px_24px_rgba(59,29,42,0.06)] p-5 space-y-4">
+        <div>
+          <h2 class="font-display text-xl font-bold text-berry">Input Invoice Manual (Admin)</h2>
+          <p class="text-xs sm:text-sm text-[#7A5563]">Catat pesanan masuk via DM/WA langsung ke buku rekap digital.</p>
+        </div>
+
+        <form id="admin-invoice-form" onsubmit="handleAdminInvoiceSubmit(event)" novalidate class="space-y-3.5">
+          <div>
+            <label for="admin-model" class="block text-xs font-bold text-berry mb-1">Model Papan Katalog *</label>
+            <select
+              id="admin-model"
+              onchange="updateAdminPreviewPrice()"
+              class="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#F0D8E0] focus:border-[#FF6B8B] focus:outline-none text-sm font-semibold bg-[#FFFDFB]"
+            >
+              <!-- Populated by JS -->
+            </select>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="admin-cust-name" class="block text-xs font-bold text-berry mb-1">Nama Pemesan *</label>
+              <input id="admin-cust-name" type="text" placeholder="Contoh: Ibu Sari" class="w-full px-3.5 py-2 rounded-xl border-2 border-[#F0D8E0] focus:border-[#FF6B8B] focus:outline-none text-sm" />
+            </div>
+            <div>
+              <label for="admin-cust-phone" class="block text-xs font-bold text-berry mb-1">No. WhatsApp *</label>
+              <input id="admin-cust-phone" type="tel" placeholder="0812..." class="w-full px-3.5 py-2 rounded-xl border-2 border-[#F0D8E0] focus:border-[#FF6B8B] focus:outline-none text-sm" />
+            </div>
+          </div>
+
+          <div>
+            <label for="admin-datetime" class="block text-xs font-bold text-berry mb-1">Tanggal &amp; Jam Acara *</label>
+            <input id="admin-datetime" type="text" placeholder="Contoh: 25 Nov 2026, 10.00 WIB" class="w-full px-3.5 py-2 rounded-xl border-2 border-[#F0D8E0] focus:border-[#FF6B8B] focus:outline-none text-sm" />
+          </div>
+
+          <div>
+            <label for="admin-address" class="block text-xs font-bold text-berry mb-1">Alamat Pengiriman (Padang) *</label>
+            <input id="admin-address" type="text" placeholder="Contoh: Jl. Sudirman No. 45, Padang" class="w-full px-3.5 py-2 rounded-xl border-2 border-[#F0D8E0] focus:border-[#FF6B8B] focus:outline-none text-sm" />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <div>
+              <label for="admin-header" class="block text-xs font-bold text-berry mb-1">Header Ucapan</label>
+              <input id="admin-header" type="text" value="Congratulation" class="w-full px-3 py-2 rounded-xl border-2 border-[#F0D8E0] focus:border-[#FF6B8B] focus:outline-none text-xs sm:text-sm" />
+            </div>
+            <div>
+              <label for="admin-recipient" class="block text-xs font-bold text-berry mb-1">Nama Penerima *</label>
+              <input id="admin-recipient" type="text" placeholder="Nama penerima" class="w-full px-3 py-2 rounded-xl border-2 border-[#F0D8E0] focus:border-[#FF6B8B] focus:outline-none text-xs sm:text-sm" />
+            </div>
+            <div>
+              <label for="admin-sender" class="block text-xs font-bold text-berry mb-1">Pengirim</label>
+              <input id="admin-sender" type="text" placeholder="Nama pengirim" class="w-full px-3 py-2 rounded-xl border-2 border-[#F0D8E0] focus:border-[#FF6B8B] focus:outline-none text-xs sm:text-sm" />
+            </div>
+          </div>
+
+          <div>
+            <p class="block text-xs font-bold text-berry mb-1.5">Add-Ons Tambahan</p>
+            <div class="flex flex-wrap gap-3">
+              <label class="inline-flex items-center gap-2 text-xs font-semibold text-berry cursor-pointer">
+                <input type="checkbox" id="admin-addon-lampu" onchange="updateAdminPreviewPrice()" class="w-4 h-4 accent-[#FF6B8B]" />
+                <span>Lampu Sorot Mini (+Rp 25.000)</span>
+              </label>
+              <label class="inline-flex items-center gap-2 text-xs font-semibold text-berry cursor-pointer">
+                <input type="checkbox" id="admin-addon-express" onchange="updateAdminPreviewPrice()" class="w-4 h-4 accent-[#FF6B8B]" />
+                <span>Express Order &lt; H-1 (+Rp 30.000)</span>
+              </label>
+            </div>
+          </div>
+
+          <p id="admin-form-error" class="text-xs font-semibold text-[#C81E4A] hidden"></p>
+
+          <div class="flex items-center justify-between pt-2 border-t border-[#F5E1D8]">
+            <div>
+              <span class="text-xs text-[#7A5563]">Estimasi Total Sewa</span>
+              <p id="admin-total-preview" class="font-display text-xl font-bold text-[#2D6A4F] tabular-nums">Rp 99.000</p>
+            </div>
+            <button
+              type="submit"
+              class="btn-game btn-coral px-5 py-3 rounded-2xl text-sm font-bold cursor-pointer min-h-[44px]"
+            >
+              💾 Simpan Invoice
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- RIGHT COLUMN: SAVED INVOICES HISTORY -->
+      <section aria-label="Riwayat Invoice Tersimpan" class="lg:col-span-7 space-y-4">
+        <!-- Summary Metrics -->
+        <div class="grid grid-cols-2 gap-3.5">
+          <div class="bg-white rounded-3xl border-2 border-[#F3DCE4] p-4 shadow-sm">
+            <p class="text-xs font-semibold text-[#7A5563]">Total Invoice Tersimpan</p>
+            <p id="rekap-stat-count" class="font-display text-2xl sm:text-3xl font-bold text-berry tabular-nums mt-1">0</p>
+          </div>
+          <div class="bg-white rounded-3xl border-2 border-[#F3DCE4] p-4 shadow-sm">
+            <p class="text-xs font-semibold text-[#7A5563]">Akumulasi Sewa (Non-Ongkir)</p>
+            <p id="rekap-stat-revenue" class="font-display text-2xl sm:text-3xl font-bold text-[#2D6A4F] tabular-nums mt-1">Rp 0</p>
+          </div>
+        </div>
+
+        <!-- Search Filter -->
+        <div class="bg-white rounded-3xl border-2 border-[#F3DCE4] p-4 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+            <h2 class="font-display text-lg font-bold text-berry">Riwayat Invoice Pelanggan</h2>
+            <input
+              id="rekap-search"
+              type="search"
+              oninput="renderRekapList()"
+              placeholder="Cari nomor invoice / nama..."
+              aria-label="Cari riwayat invoice"
+              class="w-full sm:w-64 px-3.5 py-2 rounded-xl border-2 border-[#F0D8E0] focus:border-[#FF6B8B] focus:outline-none text-xs sm:text-sm"
+            />
+          </div>
+
+          <div id="rekap-list-container" class="space-y-3">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- MODAL PREVIEW & DOWNLOAD PNG INVOICE (FROM REKAP) -->
+  <div
+    id="invoice-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-invoice-title"
+    class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
+  >
+    <div class="bg-white rounded-3xl border-2 border-[#F3DCE4] max-w-lg w-full max-h-[90vh] overflow-y-auto p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between gap-2">
+        <h3 id="modal-invoice-title" class="font-display text-lg font-bold text-berry">Preview Digital Invoice</h3>
+        <button
+          type="button"
+          onclick="closeInvoiceModal()"
+          aria-label="Tutup preview invoice"
+          class="w-9 h-9 rounded-full bg-[#FFF0F4] text-berry font-bold flex items-center justify-center cursor-pointer hover:bg-[#FFE0EA]"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div id="modal-invoice-capture" class="rounded-3xl border-2 border-dashed border-[#E8B8C7] bg-[#FFFDFB] p-4 space-y-3">
+        <!-- Populated dynamically -->
+      </div>
+
+      <div class="flex flex-wrap gap-2.5">
+        <button
+          type="button"
+          id="modal-download-png-btn"
+          class="btn-game btn-sunny flex-1 px-4 py-2.5 rounded-2xl text-sm font-bold cursor-pointer min-h-[44px]"
+        >
+          📸 Download PNG
+        </button>
+        <a
+          id="modal-wa-link"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-game btn-wa flex-1 px-4 py-2.5 rounded-2xl text-sm font-bold text-center min-h-[44px] flex items-center justify-center"
+        >
+          💬 Kirim ke WA
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- VANILLA JAVASCRIPT APPLICATION LOGIC & LAYERED SVG RENDERER           -->
+  <!-- ===================================================================== -->
+  <script>
+    // 1. CATALOG DATA (11 Official Models from PDF + 1 Locked Card)
+    const CATALOG_MODELS = [
+      {
+        id: 'black-arch',
+        name: 'Black Arch',
+        price: 99000,
+        shape: 'arch',
+        easel: 'black-tripod',
+        defaultBoardColor: '#1A1A1D',
+        defaultFrameColor: '#1A1A1D',
+        defaultFlowerTheme: 'merah-putih',
+        defaultRibbonColor: '#FFFFFF',
+        hasRibbon: false,
+        tulleColor: '#FFFFFF',
+        isMirror: false,
+        description: 'Papan lengkung hitam, bunga merah-putih & kain tile putih'
+      },
+      {
+        id: 'white-arch',
+        name: 'White Arch',
+        price: 99000,
+        shape: 'arch',
+        easel: 'black-tripod',
+        defaultBoardColor: '#FCECF2',
+        defaultFrameColor: '#FCECF2',
+        defaultFlowerTheme: 'lily-pink',
+        defaultRibbonColor: '#FF85A6',
+        hasRibbon: false,
+        tulleColor: '#FF85A6',
+        isMirror: false,
+        description: 'Papan lengkung putih-pink, bunga lily pink-putih & tile pink'
+      },
+      {
+        id: 'glass-square',
+        name: 'Glass Square',
+        price: 99000,
+        shape: 'wavy-vertical',
+        easel: 'black-tripod',
+        defaultBoardColor: '#F3F7FA',
+        defaultFrameColor: '#CBE3EE',
+        defaultFlowerTheme: 'hitam-oranye',
+        defaultRibbonColor: '#FFFFFF',
+        hasRibbon: false,
+        tulleColor: '#FFFFFF',
+        isMirror: false,
+        description: 'Papan gelombang putih bingkai akrilik bening & bunga hitam-oranye'
+      },
+      {
+        id: 'blue-moon',
+        name: 'Blue Moon',
+        price: 99000,
+        shape: 'circle',
+        easel: 'black-tripod',
+        defaultBoardColor: '#FFFFFF',
+        defaultFrameColor: '#E5EEF5',
+        defaultFlowerTheme: 'biru-putih',
+        defaultRibbonColor: '#5AA9E6',
+        hasRibbon: false,
+        tulleColor: '#5AA9E6',
+        isMirror: false,
+        description: 'Papan bulat putih, rangkaian bunga biru-putih sabit & tile biru'
+      },
+      {
+        id: 'orchid-grid',
+        name: 'Orchid Grid',
+        price: 110000,
+        shape: 'wavy-vertical',
+        easel: 'black-tripod',
+        defaultBoardColor: '#F8F7FA',
+        defaultFrameColor: '#F48FB1',
+        defaultFlowerTheme: 'anggrek-pink',
+        defaultRibbonColor: '#F48FB1',
+        hasRibbon: true,
+        ribbonPos: 'top-center',
+        tulleColor: 'none',
+        isMirror: false,
+        description: 'Papan gelombang list pink, pita atas & anggrek pink'
+      },
+      {
+        id: 'mocha-tone',
+        name: 'Mocha Tone',
+        price: 125000,
+        shape: 'wavy-horizontal-frame',
+        easel: 'black-tripod',
+        defaultBoardColor: '#5C3018',
+        defaultFrameColor: '#FFFFFF',
+        defaultFlowerTheme: 'mocha-lily',
+        defaultRibbonColor: '#7B1E2B',
+        hasRibbon: true,
+        ribbonPos: 'top-left',
+        tulleColor: 'none',
+        isMirror: false,
+        description: 'Bingkai gelombang putih & panel mocha, pita maroon & lily putih'
+      },
+      {
+        id: 'tulip-bloom',
+        name: 'Tulip Bloom',
+        price: 125000,
+        shape: 'wavy-horizontal-frame',
+        easel: 'black-tripod',
+        defaultBoardColor: '#EC739E',
+        defaultFrameColor: '#FFFFFF',
+        defaultFlowerTheme: 'tulip-pink',
+        defaultRibbonColor: '#FF2E7E',
+        hasRibbon: true,
+        ribbonPos: 'top-left',
+        tulleColor: 'none',
+        isMirror: false,
+        description: 'Bingkai gelombang putih & panel pink, tulip dan mawar pink-putih'
+      },
+      {
+        id: 'sun-mirror',
+        name: 'Sun Mirror',
+        price: 135000,
+        shape: 'wavy-horizontal-frame',
+        easel: 'black-tripod',
+        defaultBoardColor: '#DCE8F0',
+        defaultFrameColor: '#5D3A22',
+        defaultInnerTrimColor: '#EBD5B3',
+        defaultFlowerTheme: 'matahari',
+        defaultRibbonColor: '#EBD5B3',
+        hasRibbon: true,
+        ribbonPos: 'top-left',
+        tulleColor: 'none',
+        isMirror: true,
+        description: 'Papan cermin bingkai cokelat tua-krem & bunga matahari cerah'
+      },
+      {
+        id: 'prism-mirror',
+        name: 'Prism Mirror',
+        price: 135000,
+        shape: 'prism-mirror',
+        easel: 'wood-easel',
+        defaultBoardColor: '#E2EDF3',
+        defaultFrameColor: '#FFFFFF',
+        defaultFlowerTheme: 'merah-kuning',
+        defaultRibbonColor: '#B71C1C',
+        hasRibbon: true,
+        ribbonPos: 'top-right',
+        tulleColor: 'none',
+        isMirror: true,
+        description: 'Cermin gelombang asimetris, boks mawar merah-kuning & easel kayu'
+      },
+      {
+        id: 'flora-shelf',
+        name: 'Flora Shelf',
+        price: 135000,
+        shape: 'flora-shelf',
+        easel: 'a-frame-wood',
+        defaultBoardColor: '#63412C',
+        defaultFrameColor: '#4E3220',
+        defaultFlowerTheme: 'pink-putih',
+        defaultRibbonColor: '#FF85A6',
+        hasRibbon: false,
+        tulleColor: 'none',
+        isMirror: false,
+        description: 'Rak kayu cokelat A-frame berdiri dengan kotak bunga pink-putih'
+      },
+      {
+        id: 'red-rustic',
+        name: 'Red Rustic',
+        price: 150000,
+        shape: 'wide-rustic',
+        easel: 'wood-easel',
+        defaultBoardColor: '#7D1926',
+        defaultFrameColor: '#FFFFFF',
+        defaultFlowerTheme: 'merah-pink',
+        defaultRibbonColor: '#FFFFFF',
+        hasRibbon: false,
+        tulleColor: 'none',
+        isMirror: false,
+        description: 'Papan lebar merah maroon, bunga merah-pink di sudut & easel kayu'
+      },
+      {
+        id: 'coming-soon',
+        name: 'Coming Soon (???)',
+        price: 0,
+        shape: 'wide-rustic',
+        easel: 'black-tripod',
+        defaultBoardColor: '#FFD166',
+        defaultFlowerTheme: 'matahari',
+        defaultRibbonColor: '#FF6B8B',
+        hasRibbon: false,
+        locked: true,
+        description: 'Koleksi misteri terbaru FLORDE.ZAR segera hadir!'
+      }
+    ];
+
+    const BOARD_SWATCHES = [
+      { name: 'Hitam', hex: '#1A1A1D' },
+      { name: 'Putih Pink', hex: '#FCECF2' },
+      { name: 'Putih Salju', hex: '#FFFFFF' },
+      { name: 'Mocha', hex: '#5C3018' },
+      { name: 'Coral Pink', hex: '#EC739E' },
+      { name: 'Maroon', hex: '#7D1926' },
+      { name: 'Cermin Sky', hex: '#DCE8F0' },
+      { name: 'Sage', hex: '#2D6A4F' }
+    ];
+
+    const FLOWER_THEMES = {
+      'merah-putih': { label: 'Merah & Putih', primary: '#D92638', secondary: '#FFFFFF', accent: '#F48FB1', leaf: '#2D6A4F' },
+      'lily-pink': { label: 'Lily Pink-Putih', primary: '#FF5C93', secondary: '#FFF5F8', accent: '#FFB3C6', leaf: '#3A7D58' },
+      'hitam-oranye': { label: 'Hitam & Oranye', primary: '#1E1E24', secondary: '#F57C3A', accent: '#FFFDF9', leaf: '#2E5A44' },
+      'biru-putih': { label: 'Biru & Putih', primary: '#2B8AE2', secondary: '#FFFFFF', accent: '#90CCF4', leaf: '#3A7D58' },
+      'anggrek-pink': { label: 'Anggrek Pink', primary: '#EC407A', secondary: '#F8BBD0', accent: '#FFFFFF', leaf: '#4CAF50' },
+      'mocha-lily': { label: 'Mocha & Dusty Rose', primary: '#B57C74', secondary: '#FFFFFF', accent: '#E6B8AF', leaf: '#4A6B53' },
+      'tulip-pink': { label: 'Tulip & Mawar Pink', primary: '#FF4D8D', secondary: '#FFE4EE', accent: '#FFC2D4', leaf: '#3B7A57' },
+      'matahari': { label: 'Bunga Matahari', primary: '#FFB703', secondary: '#FB8500', accent: '#4A2C18', leaf: '#2D6A4F' },
+      'merah-kuning': { label: 'Mawar Merah-Kuning', primary: '#D62828', secondary: '#FCBF49', accent: '#FFF3D6', leaf: '#2D6A4F' },
+      'pink-putih': { label: 'Pink & Putih Segar', primary: '#FF7096', secondary: '#FFFFFF', accent: '#FFB3C6', leaf: '#388E3C' },
+      'merah-pink': { label: 'Merah & Soft Pink', primary: '#C1121F', secondary: '#F8BBD0', accent: '#FFFFFF', leaf: '#2D6A4F' }
+    };
+
+    const RIBBON_OPTIONS = [
+      { name: 'Putih', hex: '#FFFFFF' },
+      { name: 'Pink Cerah', hex: '#FF4D8D' },
+      { name: 'Maroon', hex: '#7B1E2B' },
+      { name: 'Biru Langit', hex: '#5AA9E6' },
+      { name: 'Krem', hex: '#EBD5B3' },
+      { name: 'Merah', hex: '#B71C1C' },
+      { name: 'Tanpa Pita', hex: 'none' }
+    ];
+
+    const GREETING_TEMPLATES = [
+      { label: 'Happy Wedding', header: 'Happy Wedding', recipient: 'Raka & Nisa', sender: 'Keluarga Besar Padang' },
+      { label: 'Semprotulation', header: 'Semprotulation!', recipient: 'Alya Putri, S.E.', sender: 'Bestie Seperjuangan' },
+      { label: 'Congratulation', header: 'Congratulation', recipient: 'dr. Farhan Pratama', sender: 'Rekan Sejawat' },
+      { label: 'Grand Opening', header: 'Grand Opening', recipient: 'Kopi Senja Padang', sender: 'Sahabat & Partner' },
+      { label: 'Turut Berduka Cita', header: 'Turut Berduka Cita', recipient: 'Almarhum Bpk. H. Ahmad', sender: 'Keluarga Besar & Kerabat' }
+    ];
+
+    const FONT_STYLES = [
+      { id: 'romantis', name: 'Romantis / Script', sample: 'Abc', fontFamily: "Georgia, 'Times New Roman', serif", fontStyle: 'italic' },
+      { id: 'modern', name: 'Modern / Bold', sample: 'ABC', fontFamily: "'Fredoka', sans-serif", fontStyle: 'normal' },
+      { id: 'klasik', name: 'Klasik / Serif', sample: 'Abc', fontFamily: "Georgia, 'Times New Roman', serif", fontStyle: 'normal' }
+    ];
+
+    const FREE_STICKERS = [
+      { id: 'Kupu-kupu kecil', icon: '🦋', label: 'Kupu-kupu kecil' },
+      { id: 'Pita Estetik', icon: '🎀', label: 'Pita Estetik' },
+      { id: 'Topi Wisuda', icon: '🎓', label: 'Topi Wisuda' },
+      { id: 'Cincin Nikah', icon: '💍', label: 'Cincin Nikah' }
+    ];
+
+    const ADDON_OPTIONS = [
+      { id: 'lampu-sorot', name: 'Lampu Sorot Mini', price: 25000, desc: 'Dua lampu sorot hangat menerangi papan di sore/malam hari' },
+      { id: 'express-order', name: 'Express Order < H-1', price: 30000, desc: 'Prioritas pengerjaan kilat di hari yang sama (Area Padang)' }
+    ];
+
+    const STORAGE_KEY = 'flordezar_invoices_v1';
+    const ADMIN_WA_NUMBER = '6281234567890'; // Nomor Admin FLORDE.ZAR Padang
+
+    // 2. APPLICATION STATE
+    const state = {
+      mode: 'customizer',
+      activeTab: 'catalog',
+      modelId: 'black-arch',
+      boardColor: '#1A1A1D',
+      flowerTheme: 'merah-putih',
+      ribbonColor: '#FFFFFF',
+      tulleColor: '#FFFFFF',
+      hasRibbon: false,
+      headerText: 'Happy Wedding',
+      recipientText: 'Raka & Nisa',
+      senderText: 'Dari: Sahabat Terdekat',
+      fontStyle: 'romantis',
+      stickers: [],
+      addOns: [],
+      customerName: '',
+      customerPhone: '',
+      eventDateTime: '',
+      deliveryAddress: '',
+      previewInvoiceNumber: 'INV-FDZ-2026-001',
+      lastWhatsAppMessage: '',
+      invoices: []
+    };
+
+    // 3. PURE HELPERS
+    function formatRupiah(amount) {
+      const safe = Number.isFinite(amount) ? Math.max(0, Math.round(amount)) : 0;
+      return 'Rp ' + safe.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+
+    function getModelById(id) {
+      return CATALOG_MODELS.find(m => m.id === id) || CATALOG_MODELS[0];
+    }
+
+    function getContrastingTextColor(hexColor, isMirror) {
+      if (isMirror) return '#2D1A22';
+      const clean = (hexColor || '').replace('#', '').trim();
+      if (clean.length !== 6) return '#2D1A22';
+      const r = parseInt(clean.slice(0, 2), 16);
+      const g = parseInt(clean.slice(2, 4), 16);
+      const b = parseInt(clean.slice(4, 6), 16);
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      return luminance < 0.56 ? '#FFF8F3' : '#3B1D2A';
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function generateInvoiceNumber(list) {
+      const prefix = 'INV-FDZ-2026-';
+      let maxNum = 0;
+      list.forEach(inv => {
+        if (inv.invoiceNumber && inv.invoiceNumber.startsWith(prefix)) {
+          const n = parseInt(inv.invoiceNumber.slice(prefix.length), 10);
+          if (!Number.isNaN(n) && n > maxNum) maxNum = n;
+        }
+      });
+      return prefix + String(maxNum + 1).padStart(3, '0');
+    }
+
+    function calculateTotals(basePrice, addOnIds) {
+      const addOnsTotal = addOnIds.reduce((sum, id) => {
+        const found = ADDON_OPTIONS.find(a => a.id === id);
+        return sum + (found ? found.price : 0);
+      }, 0);
+      return {
+        basePrice,
+        addOnsTotal,
+        totalPrice: basePrice + addOnsTotal
+      };
+    }
+
+    function buildWhatsAppMessage(inv) {
+      const addOnText = inv.addOns.length
+        ? inv.addOns.map(id => ADDON_OPTIONS.find(a => a.id === id)?.name || id).join(', ')
+        : 'Tidak ada';
+      const stickerText = inv.stickers && inv.stickers.length ? inv.stickers.join(', ') : 'Tanpa stiker tambahan';
+      return [
+        'Halo Admin FLORDE.ZAR! 🌸',
+        'Saya ingin konfirmasi pemesanan papan bunga:',
+        '',
+        `*No. Invoice:* ${inv.invoiceNumber}`,
+        `*Pemesan:* ${inv.customerName}`,
+        `*No. WA:* ${inv.customerPhone}`,
+        `*Acara:* ${inv.eventDateTime}`,
+        `*Alamat Padang:* ${inv.deliveryAddress}`,
+        '',
+        `*Model Katalog:* ${inv.modelName} (${formatRupiah(inv.basePrice)})`,
+        `*Tema Bunga:* ${FLOWER_THEMES[inv.flowerTheme]?.label || inv.flowerTheme}`,
+        `*Ucapan Header:* ${inv.headerText || '-'}`,
+        `*Nama Penerima:* ${inv.recipientText || '-'}`,
+        `*Nama Pengirim:* ${inv.senderText || '-'}`,
+        `*Gaya Font:* ${inv.fontStyle}`,
+        `*Stiker Gratis:* ${stickerText}`,
+        `*Add-Ons:* ${addOnText}`,
+        '',
+        `*Estimasi Total Sewa:* ${formatRupiah(inv.totalPrice)}`,
+        '_(Belum termasuk ongkos kirim, mohon info ongkir ke lokasi di atas ya Kak)_'
+      ].join('\n');
+    }
+
+    function buildWhatsAppUrl(inv) {
+      return `https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(buildWhatsAppMessage(inv))}`;
+    }
+
+    function loadInvoicesFromStorage() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) return parsed;
+        }
+      } catch (e) {
+        // Fallback to seed data below
+      }
+      // Deterministic sample seed record on very first visit
+      const seed = [
+        {
+          invoiceNumber: 'INV-FDZ-2026-001',
+          createdAt: '2026-11-18T08:30:00.000Z',
+          modelId: 'sun-mirror',
+          modelName: 'Sun Mirror',
+          basePrice: 135000,
+          boardColor: '#DCE8F0',
+          flowerTheme: 'matahari',
+          ribbonColor: '#EBD5B3',
+          tulleColor: 'none',
+          hasRibbon: true,
+          headerText: 'Congratulation',
+          recipientText: 'Klinik Gigi Senyum Padang',
+          senderText: 'Sahabat Alumni Unand',
+          fontStyle: 'klasik',
+          stickers: ['Kupu-kupu kecil'],
+          addOns: ['lampu-sorot'],
+          addOnsTotal: 25000,
+          totalPrice: 160000,
+          customerName: 'Dina Maharani',
+          customerPhone: '081374009911',
+          eventDateTime: 'Sabtu, 21 Nov 2026 • 09.00 WIB',
+          deliveryAddress: 'Jl. Khatib Sulaiman No. 88, Padang',
+          source: 'customizer'
+        }
+      ];
+      saveInvoicesToStorage(seed);
+      return seed;
+    }
+
+    function saveInvoicesToStorage(list) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      } catch (e) {
+        showToast('Penyimpanan browser penuh, gagal menyimpan otomatis.', 'error');
+      }
+    }
+
+    // 4. LAYERED SVG BOTANICAL & BOARD GENERATOR
+    function svgRose(cx, cy, r, fill, centerFill) {
+      return `
+        <g transform="translate(${cx}, ${cy})">
+          <circle cx="0" cy="0" r="${r}" fill="${fill}"/>
+          <circle cx="${-r*0.28}" cy="${-r*0.18}" r="${r*0.58}" fill="${centerFill}" opacity="0.35"/>
+          <circle cx="${r*0.25}" cy="${r*0.2}" r="${r*0.5}" fill="${fill}"/>
+          <path d="M ${-r*0.42} 0 A ${r*0.42} ${r*0.42} 0 1 1 ${r*0.42} 0" fill="none" stroke="rgba(255,255,255,0.42)" stroke-width="1.4" stroke-linecap="round"/>
+          <circle cx="0" cy="0" r="${r*0.28}" fill="${centerFill}" opacity="0.75"/>
+        </g>
+      `;
+    }
+
+    function svgLily(cx, cy, s, petalColor, centerColor) {
+      return `
+        <g transform="translate(${cx}, ${cy}) scale(${s})">
+          <g fill="${petalColor}" stroke="rgba(255,255,255,0.65)" stroke-width="0.8">
+            <ellipse cx="0" cy="-10" rx="4.2" ry="9.5" transform="rotate(0)"/>
+            <ellipse cx="0" cy="-10" rx="4.2" ry="9.5" transform="rotate(60)"/>
+            <ellipse cx="0" cy="-10" rx="4.2" ry="9.5" transform="rotate(120)"/>
+            <ellipse cx="0" cy="-10" rx="4.2" ry="9.5" transform="rotate(180)"/>
+            <ellipse cx="0" cy="-10" rx="4.2" ry="9.5" transform="rotate(240)"/>
+            <ellipse cx="0" cy="-10" rx="4.2" ry="9.5" transform="rotate(300)"/>
+          </g>
+          <circle cx="0" cy="0" r="3.4" fill="${centerColor}"/>
+          <circle cx="-2" cy="-2" r="1" fill="#FFD166"/>
+          <circle cx="2" cy="-1" r="1" fill="#FFD166"/>
+          <circle cx="0" cy="2" r="1" fill="#FFD166"/>
+        </g>
+      `;
+    }
+
+    function svgSunflower(cx, cy, s, petalColor, innerOrange) {
+      let petals = '';
+      for (let i = 0; i < 12; i++) {
+        petals += `<ellipse cx="0" cy="-13" rx="3.3" ry="7.8" fill="${i % 2 === 0 ? petalColor : innerOrange}" transform="rotate(${i * 30})"/>`;
+      }
+      return `
+        <g transform="translate(${cx}, ${cy}) scale(${s})">
+          ${petals}
+          <circle cx="0" cy="0" r="7.5" fill="#4A2C18"/>
+          <circle cx="0" cy="0" r="5.2" fill="#6D4124" stroke="#361E0E" stroke-width="1" stroke-dasharray="1.5 1.5"/>
+        </g>
+      `;
+    }
+
+    function svgTulip(cx, cy, s, color1, color2) {
+      return `
+        <g transform="translate(${cx}, ${cy}) scale(${s})">
+          <path d="M 0 2 L 0 15" stroke="#2D6A4F" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M 0 12 Q -8 6 -6 0" fill="none" stroke="#3A7D58" stroke-width="2" stroke-linecap="round"/>
+          <path d="M -7 2 C -9 -8, -3 -12, 0 -4 C 3 -12, 9 -8, 7 2 C 5 6, -5 6, -7 2 Z" fill="${color1}"/>
+          <path d="M -4 3 C -4 -7, 0 -13, 0 -13 C 0 -13, 4 -7, 4 3 Z" fill="${color2}" opacity="0.9"/>
+        </g>
+      `;
+    }
+
+    function svgOrchid(cx, cy, s, p1, p2) {
+      return `
+        <g transform="translate(${cx}, ${cy}) scale(${s})">
+          <ellipse cx="0" cy="-8" rx="4.5" ry="7" fill="${p2}"/>
+          <ellipse cx="-8" cy="-1" rx="7" ry="5" fill="${p1}" transform="rotate(-15 -8 -1)"/>
+          <ellipse cx="8" cy="-1" rx="7" ry="5" fill="${p1}" transform="rotate(15 8 -1)"/>
+          <ellipse cx="-5" cy="7" rx="4.5" ry="6" fill="${p2}" transform="rotate(20 -5 7)"/>
+          <ellipse cx="5" cy="7" rx="4.5" ry="6" fill="${p2}" transform="rotate(-20 5 7)"/>
+          <circle cx="0" cy="1" r="3.2" fill="#AD1457"/>
+          <circle cx="0" cy="0.5" r="1.4" fill="#FFD166"/>
+        </g>
+      `;
+    }
+
+    function svgDaisy(cx, cy, s, petalColor, centerColor) {
+      let petals = '';
+      for (let i = 0; i < 8; i++) {
+        petals += `<ellipse cx="0" cy="-8" rx="2.7" ry="5.5" fill="${petalColor}" transform="rotate(${i * 45})"/>`;
+      }
+      return `
+        <g transform="translate(${cx}, ${cy}) scale(${s})">
+          ${petals}
+          <circle cx="0" cy="0" r="3.4" fill="${centerColor}"/>
+        </g>
+      `;
+    }
+
+    function svgLeaves(cx, cy, angle, leafColor) {
+      return `
+        <g transform="translate(${cx}, ${cy}) rotate(${angle})">
+          <ellipse cx="0" cy="-10" rx="4.5" ry="11" fill="${leafColor}"/>
+          <ellipse cx="-7" cy="-5" rx="3.8" ry="9" fill="${leafColor}" opacity="0.88" transform="rotate(-28)"/>
+          <ellipse cx="7" cy="-5" rx="3.8" ry="9" fill="${leafColor}" opacity="0.88" transform="rotate(28)"/>
+        </g>
+      `;
+    }
+
+    function svgRibbonBow(cx, cy, color, scale = 1) {
+      if (!color || color === 'none') return '';
+      return `
+        <g transform="translate(${cx}, ${cy}) scale(${scale})">
+          <path d="M -2 3 L -10 24 L -3 20 L 0 5 Z" fill="${color}" stroke="rgba(0,0,0,0.14)" stroke-width="0.8"/>
+          <path d="M 2 3 L 10 24 L 3 20 L 0 5 Z" fill="${color}" stroke="rgba(0,0,0,0.14)" stroke-width="0.8"/>
+          <path d="M 0 0 C -16 -12, -20 8, -2 3 Z" fill="${color}" stroke="rgba(0,0,0,0.15)" stroke-width="0.9"/>
+          <path d="M 0 0 C 16 -12, 20 8, 2 3 Z" fill="${color}" stroke="rgba(0,0,0,0.15)" stroke-width="0.9"/>
+          <circle cx="0" cy="1.5" r="4" fill="${color}" stroke="rgba(0,0,0,0.2)" stroke-width="0.9"/>
+        </g>
+      `;
+    }
+
+    function wrapTextLines(text, maxChars) {
+      const clean = (text || '').trim();
+      if (!clean) return [];
+      const words = clean.split(/\s+/);
+      const lines = [];
+      let current = '';
+      words.forEach(w => {
+        if (!current) {
+          current = w;
+        } else if ((current + ' ' + w).length <= maxChars) {
+          current += ' ' + w;
+        } else {
+          lines.push(current);
+          current = w;
+        }
+      });
+      if (current) lines.push(current);
+      return lines.slice(0, 3);
+    }
+
+    function renderBoardSVG(cfg, isThumb = false) {
+      const model = getModelById(cfg.modelId);
+      const theme = FLOWER_THEMES[cfg.flowerTheme] || FLOWER_THEMES['merah-putih'];
+      const boardColor = cfg.boardColor || model.defaultBoardColor;
+      const frameColor = model.defaultFrameColor || '#FFFFFF';
+      const innerTrim = model.defaultInnerTrimColor || '#EBD5B3';
+      const ribbonColor = cfg.ribbonColor !== undefined ? cfg.ribbonColor : model.defaultRibbonColor;
+      const tulleColor = cfg.tulleColor !== undefined ? cfg.tulleColor : (model.tulleColor || 'none');
+      const hasSpotlight = !isThumb && cfg.addOns && cfg.addOns.includes('lampu-sorot');
+
+      // 1. Easel / Stand SVG Layer
+      let easelSvg = '';
+      if (model.easel === 'black-tripod') {
+        easelSvg = `
+          <g id="easel-black">
+            <line x1="200" y1="68" x2="200" y2="338" stroke="#1E1E22" stroke-width="7" stroke-linecap="round"/>
+            <line x1="200" y1="90" x2="120" y2="432" stroke="#1E1E22" stroke-width="7.5" stroke-linecap="round"/>
+            <line x1="200" y1="90" x2="280" y2="432" stroke="#1E1E22" stroke-width="7.5" stroke-linecap="round"/>
+            <line x1="200" y1="110" x2="200" y2="412" stroke="#2D2D33" stroke-width="6" stroke-linecap="round"/>
+            <rect x="115" y="302" width="170" height="8" rx="4" fill="#17171A"/>
+          </g>
+        `;
+      } else if (model.easel === 'wood-easel') {
+        easelSvg = `
+          <g id="easel-wood">
+            <line x1="200" y1="74" x2="200" y2="335" stroke="#C69C6D" stroke-width="9" stroke-linecap="round"/>
+            <line x1="200" y1="96" x2="122" y2="432" stroke="#D7B184" stroke-width="10" stroke-linecap="round"/>
+            <line x1="200" y1="96" x2="278" y2="432" stroke="#D7B184" stroke-width="10" stroke-linecap="round"/>
+            <line x1="145" y1="362" x2="255" y2="362" stroke="#B6895B" stroke-width="7" stroke-linecap="round"/>
+            <rect x="118" y="300" width="164" height="9" rx="3" fill="#C69C6D"/>
+          </g>
+        `;
+      } else if (model.easel === 'a-frame-wood') {
+        easelSvg = `
+          <g id="easel-aframe">
+            <line x1="138" y1="278" x2="120" y2="424" stroke="#4E3220" stroke-width="12" stroke-linecap="round"/>
+            <line x1="262" y1="278" x2="280" y2="424" stroke="#4E3220" stroke-width="12" stroke-linecap="round"/>
+            <line x1="175" y1="260" x2="245" y2="405" stroke="#3D2618" stroke-width="9" stroke-linecap="round"/>
+          </g>
+        `;
+      }
+
+      // 2. Draped Tulle / Kain Tile Layer
+      let tulleSvg = '';
+      if (tulleColor && tulleColor !== 'none') {
+        tulleSvg = `
+          <g id="tulle-drape" opacity="0.82">
+            <path d="M 186 294 Q 178 360 166 420 L 234 420 Q 222 360 214 294 Z" fill="${tulleColor}" stroke="rgba(0,0,0,0.08)" stroke-width="0.8"/>
+            <path d="M 193 296 Q 190 360 185 420" fill="none" stroke="rgba(255,255,255,0.65)" stroke-width="2"/>
+            <path d="M 207 296 Q 210 360 215 420" fill="none" stroke="rgba(255,255,255,0.65)" stroke-width="2"/>
+          </g>
+        `;
+      }
+
+      // 3. Board Shape + Frame + Mirror Sheen + Text Center Coordinates
+      let boardSvg = '';
+      let textZone = { x: 200, yHeader: 175, yRecip: 210, ySender: 248, maxChars: 16 };
+      const wavyVerticalPath = 'M 122 104 Q 148 92 174 104 Q 200 115 226 104 Q 252 92 278 104 Q 290 135 278 165 Q 266 196 278 228 Q 290 262 278 296 Q 252 308 226 296 Q 200 285 174 296 Q 148 308 122 296 Q 110 262 122 228 Q 134 196 122 165 Q 110 135 122 104 Z';
+      const wavyInnerHorizPath = 'M 94 128 Q 120 116 146 128 Q 173 140 200 128 Q 227 116 254 128 Q 280 140 306 128 Q 318 158 306 188 Q 294 218 306 248 Q 318 274 306 286 Q 280 298 254 286 Q 227 274 200 286 Q 173 298 146 286 Q 120 274 94 286 Q 82 258 94 228 Q 106 198 94 168 Q 82 140 94 128 Z';
+      const svgUid = (window.__svgUid = (window.__svgUid || 0) + 1);
+      const mirrorGradId = `mirrorGrad-${svgUid}`;
+      const spotGradId = `spotGrad-${svgUid}`;
+
+      if (model.shape === 'arch') {
+        boardSvg = `
+          <path d="M 114 185 A 86 86 0 0 1 286 185 L 286 312 L 114 312 Z" fill="${boardColor}" stroke="rgba(0,0,0,0.12)" stroke-width="2"/>
+        `;
+        textZone = { x: 200, yHeader: 175, yRecip: 206, ySender: 244, maxChars: 15 };
+      } else if (model.shape === 'wavy-vertical') {
+        const isOrchid = model.id === 'orchid-grid';
+        boardSvg = `
+          <path d="${wavyVerticalPath}" fill="${boardColor}" stroke="${isOrchid ? '#F48FB1' : '#CBE3EE'}" stroke-width="${isOrchid ? '7' : '5'}"/>
+          ${!isOrchid ? `<path d="${wavyVerticalPath}" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2" transform="translate(200,200) scale(0.95) translate(-200,-200)"/>` : ''}
+        `;
+        textZone = { x: 200, yHeader: 162, yRecip: 194, ySender: 230, maxChars: 14 };
+      } else if (model.shape === 'circle') {
+        boardSvg = `
+          <circle cx="200" cy="202" r="98" fill="${boardColor}" stroke="rgba(0,0,0,0.1)" stroke-width="2"/>
+          <circle cx="200" cy="202" r="93" fill="none" stroke="rgba(90,169,230,0.22)" stroke-width="1.5"/>
+        `;
+        textZone = { x: 214, yHeader: 175, yRecip: 205, ySender: 242, maxChars: 13 };
+      } else if (model.shape === 'wavy-horizontal-frame') {
+        const isSun = model.id === 'sun-mirror';
+        boardSvg = `
+          <rect x="66" y="108" width="268" height="196" rx="4" fill="${frameColor}" stroke="rgba(0,0,0,0.12)" stroke-width="2"/>
+          ${isSun ? `<path d="${wavyInnerHorizPath}" fill="none" stroke="${innerTrim}" stroke-width="11"/>` : `<path d="${wavyInnerHorizPath}" fill="none" stroke="${model.id === 'mocha-tone' ? '#8B5A2B' : '#F48FB1'}" stroke-width="7"/>`}
+          <path d="${wavyInnerHorizPath}" fill="${model.isMirror ? `url(#${mirrorGradId})` : boardColor}"/>
+          ${model.isMirror ? `
+            <path d="M 110 140 L 175 140 L 125 270 L 95 270 Z" fill="rgba(255,255,255,0.45)" opacity="0.65"/>
+            <path d="M 190 140 L 212 140 L 160 270 L 145 270 Z" fill="rgba(255,255,255,0.38)" opacity="0.65"/>
+          ` : ''}
+        `;
+        textZone = { x: 200, yHeader: 166, yRecip: 196, ySender: 228, maxChars: 19 };
+      } else if (model.shape === 'prism-mirror') {
+        const prismPath = 'M 142 96 Q 200 84 252 102 Q 266 155 256 205 Q 248 238 258 268 L 136 268 Q 124 222 134 176 Q 144 134 142 96 Z';
+        boardSvg = `
+          <path d="${prismPath}" fill="url(#${mirrorGradId})" stroke="#D6DFE5" stroke-width="4"/>
+          <path d="M 152 110 L 190 110 L 154 252 L 138 252 Z" fill="rgba(255,255,255,0.48)"/>
+          <rect x="120" y="264" width="160" height="38" rx="3" fill="#FFFFFF" stroke="rgba(0,0,0,0.12)" stroke-width="1.5"/>
+          <text x="200" y="289" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="11" fill="#3B1D2A">florde.zar</text>
+        `;
+        textZone = { x: 198, yHeader: 158, yRecip: 188, ySender: 220, maxChars: 12 };
+      } else if (model.shape === 'flora-shelf') {
+        boardSvg = `
+          <rect x="118" y="102" width="164" height="162" rx="4" fill="${boardColor}" stroke="#3D2618" stroke-width="2"/>
+          <line x1="126" y1="110" x2="126" y2="230" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+          <line x1="274" y1="110" x2="274" y2="230" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+          <rect x="110" y="232" width="180" height="58" rx="4" fill="${frameColor}" stroke="#3D2618" stroke-width="2"/>
+          <line x1="112" y1="252" x2="288" y2="252" stroke="rgba(0,0,0,0.22)" stroke-width="1.5"/>
+          <text x="278" y="280" text-anchor="end" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" fill="#FFF8F3" opacity="0.85">@florde.zar</text>
+        `;
+        textZone = { x: 200, yHeader: 136, yRecip: 164, ySender: 192, maxChars: 15 };
+      } else if (model.shape === 'wide-rustic') {
+        boardSvg = `
+          <rect x="64" y="114" width="272" height="186" rx="4" fill="${boardColor}" stroke="rgba(0,0,0,0.16)" stroke-width="2"/>
+          <!-- Ornamental corner flourishes -->
+          <path d="M 74 288 Q 92 288 94 268 Q 96 284 114 286" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 326 288 Q 308 288 306 268 Q 304 284 286 286" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="2" stroke-linecap="round"/>
+          <text x="200" y="290" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" fill="rgba(255,255,255,0.82)">@florde.zar</text>
+        `;
+        textZone = { x: 200, yHeader: 168, yRecip: 202, ySender: 238, maxChars: 20 };
+      }
+
+      // 4. Floral Arrangement Layer (tailored accurately per catalog model!)
+      let flowersSvg = '';
+      if (model.id === 'black-arch') {
+        flowersSvg = `
+          ${svgLeaves(118, 144, -40, theme.leaf)}
+          ${svgLeaves(154, 108, -10, theme.leaf)}
+          ${svgRose(130, 130, 12, theme.primary, theme.secondary)}
+          ${svgRose(148, 114, 11, theme.secondary, theme.primary)}
+          ${svgRose(117, 152, 9.5, theme.primary, '#FFF')}
+          ${svgRose(166, 107, 8.5, theme.accent, theme.secondary)}
+          ${svgLeaves(270, 292, 135, theme.leaf)}
+          ${svgLeaves(242, 304, 175, theme.leaf)}
+          ${svgRose(268, 292, 12, theme.secondary, theme.primary)}
+          ${svgRose(248, 300, 11, theme.primary, theme.secondary)}
+          ${svgRose(280, 272, 10, theme.primary, '#FFF')}
+          ${svgRose(230, 304, 8.5, theme.secondary, theme.accent)}
+        `;
+      } else if (model.id === 'white-arch') {
+        flowersSvg = `
+          ${svgLeaves(264, 124, 38, theme.leaf)}
+          ${svgLily(262, 124, 1.05, theme.primary, theme.secondary)}
+          ${svgLily(278, 148, 0.85, theme.secondary, theme.primary)}
+          ${svgRose(242, 110, 9, theme.accent, '#FFF')}
+          ${svgLeaves(116, 174, -15, theme.accent)}
+          ${svgDaisy(114, 168, 0.75, theme.accent, '#FFF')}
+          ${svgDaisy(112, 194, 0.7, theme.accent, '#FFF')}
+          ${svgLeaves(134, 294, -125, theme.leaf)}
+          ${svgLily(136, 294, 1.08, theme.primary, theme.secondary)}
+          ${svgDaisy(158, 302, 0.85, theme.secondary, '#FFD166')}
+          ${svgRose(118, 276, 9, theme.accent, '#FFF')}
+        `;
+      } else if (model.id === 'glass-square') {
+        flowersSvg = `
+          ${svgLeaves(176, 104, -45, theme.leaf)}
+          ${svgLeaves(224, 104, 45, theme.leaf)}
+          ${svgRose(200, 102, 12, theme.primary, theme.accent)}
+          ${svgRose(182, 105, 10, theme.secondary, theme.accent)}
+          ${svgRose(218, 105, 10, theme.accent, theme.primary)}
+          ${svgLeaves(172, 296, -130, theme.leaf)}
+          ${svgLeaves(228, 296, 130, theme.leaf)}
+          ${svgRose(200, 294, 13, theme.primary, theme.secondary)}
+          ${svgRose(180, 297, 11, theme.secondary, theme.accent)}
+          ${svgRose(220, 297, 11, theme.accent, theme.primary)}
+          ${svgRose(165, 289, 8.5, theme.secondary, '#FFF')}
+          ${svgRose(235, 289, 8.5, theme.primary, theme.secondary)}
+        `;
+      } else if (model.id === 'blue-moon') {
+        flowersSvg = `
+          ${svgLeaves(154, 112, -35, theme.leaf)}
+          ${svgLeaves(108, 198, -90, theme.leaf)}
+          ${svgLeaves(142, 282, -145, theme.leaf)}
+          ${svgDaisy(176, 110, 0.95, theme.primary, '#FFD166')}
+          ${svgDaisy(150, 122, 1.0, theme.accent, '#FFF')}
+          ${svgDaisy(128, 144, 1.05, theme.primary, '#FFF')}
+          ${svgDaisy(114, 174, 1.1, theme.secondary, '#FFD166')}
+          ${svgDaisy(108, 206, 1.1, theme.primary, '#FFF')}
+          ${svgDaisy(116, 238, 1.05, theme.accent, '#FFF')}
+          ${svgDaisy(134, 266, 1.0, theme.primary, '#FFD166')}
+          ${svgDaisy(158, 284, 0.9, theme.secondary, theme.primary)}
+        `;
+      } else if (model.id === 'orchid-grid') {
+        flowersSvg = `
+          ${svgLeaves(132, 114, -40, theme.accent)}
+          ${svgLeaves(268, 114, 40, theme.accent)}
+          ${svgOrchid(132, 114, 0.8, theme.secondary, theme.accent)}
+          ${svgOrchid(268, 114, 0.8, theme.secondary, theme.accent)}
+          ${svgLeaves(166, 272, -55, theme.leaf)}
+          ${svgLeaves(234, 272, 55, theme.leaf)}
+          ${svgOrchid(200, 288, 1.15, theme.primary, theme.secondary)}
+          ${svgOrchid(176, 276, 0.95, theme.secondary, theme.primary)}
+          ${svgOrchid(224, 276, 0.95, theme.secondary, theme.primary)}
+          ${svgOrchid(156, 262, 0.82, theme.primary, theme.accent)}
+          ${svgOrchid(244, 262, 0.82, theme.primary, theme.accent)}
+        `;
+      } else if (model.id === 'mocha-tone') {
+        flowersSvg = `
+          ${svgLeaves(102, 278, -45, theme.leaf)}
+          ${svgLeaves(298, 278, 45, theme.leaf)}
+          ${svgLily(105, 274, 1.05, theme.secondary, '#8B5A2B')}
+          ${svgLily(295, 274, 1.05, theme.secondary, '#8B5A2B')}
+          ${svgRose(132, 282, 11, theme.primary, theme.accent)}
+          ${svgRose(156, 285, 11.5, theme.secondary, theme.primary)}
+          ${svgRose(182, 282, 12, theme.primary, theme.accent)}
+          ${svgRose(206, 286, 11.5, theme.accent, theme.primary)}
+          ${svgRose(232, 282, 12, theme.primary, theme.secondary)}
+          ${svgRose(256, 285, 11, theme.secondary, theme.primary)}
+          ${svgRose(276, 281, 10, theme.accent, theme.primary)}
+        `;
+      } else if (model.id === 'tulip-bloom') {
+        flowersSvg = `
+          ${svgLeaves(104, 284, -30, theme.leaf)}
+          ${svgLeaves(296, 284, 30, theme.leaf)}
+          ${svgTulip(116, 272, 1.05, theme.primary, theme.secondary)}
+          ${svgTulip(144, 266, 1.1, theme.accent, theme.primary)}
+          ${svgRose(168, 282, 11, theme.primary, theme.secondary)}
+          ${svgTulip(192, 268, 1.1, theme.secondary, theme.primary)}
+          ${svgRose(214, 283, 11.5, theme.accent, theme.primary)}
+          ${svgTulip(238, 266, 1.1, theme.primary, theme.accent)}
+          ${svgRose(262, 282, 11, theme.secondary, theme.primary)}
+          ${svgTulip(286, 272, 1.05, theme.primary, theme.secondary)}
+        `;
+      } else if (model.id === 'sun-mirror') {
+        flowersSvg = `
+          ${svgLeaves(98, 268, -45, theme.leaf)}
+          ${svgLeaves(294, 134, 45, theme.leaf)}
+          ${svgLeaves(296, 268, 135, theme.leaf)}
+          ${svgSunflower(96, 256, 1.25, theme.primary, theme.secondary)}
+          ${svgSunflower(288, 138, 1.25, theme.primary, theme.secondary)}
+          ${svgSunflower(294, 264, 1.2, theme.primary, theme.secondary)}
+        `;
+      } else if (model.id === 'prism-mirror') {
+        flowersSvg = `
+          ${svgLeaves(142, 102, -35, theme.leaf)}
+          ${svgRose(138, 102, 10, theme.primary, theme.secondary)}
+          ${svgRose(155, 97, 9, theme.secondary, theme.accent)}
+          ${svgRose(132, 117, 8.5, theme.accent, theme.primary)}
+          ${svgLeaves(134, 254, -20, theme.leaf)}
+          ${svgLeaves(266, 254, 20, theme.leaf)}
+          ${svgRose(134, 256, 10.5, theme.secondary, theme.primary)}
+          ${svgRose(154, 257, 10.5, theme.primary, theme.accent)}
+          ${svgRose(174, 255, 11, theme.secondary, theme.primary)}
+          ${svgRose(196, 258, 10.5, theme.accent, theme.primary)}
+          ${svgRose(218, 256, 11, theme.primary, theme.secondary)}
+          ${svgRose(240, 257, 10.5, theme.secondary, theme.primary)}
+          ${svgRose(262, 256, 10.5, theme.primary, theme.accent)}
+        `;
+      } else if (model.id === 'flora-shelf') {
+        flowersSvg = `
+          ${svgLeaves(134, 224, -25, theme.leaf)}
+          ${svgLeaves(200, 220, 0, theme.leaf)}
+          ${svgLeaves(266, 224, 25, theme.leaf)}
+          ${svgLily(144, 218, 1.0, theme.primary, theme.secondary)}
+          ${svgDaisy(170, 224, 0.95, theme.secondary, '#FFD166')}
+          ${svgRose(196, 218, 11, theme.primary, theme.accent)}
+          ${svgDaisy(222, 222, 0.95, theme.secondary, '#FFD166')}
+          ${svgLily(252, 216, 1.0, theme.primary, theme.secondary)}
+          ${svgRose(274, 225, 9.5, theme.accent, theme.secondary)}
+          ${svgRose(124, 226, 9, theme.secondary, theme.primary)}
+        `;
+      } else if (model.id === 'red-rustic') {
+        flowersSvg = `
+          ${svgLeaves(84, 134, -45, theme.leaf)}
+          ${svgLeaves(124, 118, 10, theme.leaf)}
+          ${svgRose(82, 128, 11.5, theme.primary, theme.secondary)}
+          ${svgRose(104, 122, 11, theme.secondary, theme.primary)}
+          ${svgRose(74, 150, 9.5, theme.accent, theme.primary)}
+          ${svgRose(122, 118, 9, theme.primary, theme.accent)}
+
+          ${svgLeaves(316, 134, 45, theme.leaf)}
+          ${svgLeaves(276, 118, -10, theme.leaf)}
+          ${svgRose(318, 128, 11.5, theme.primary, theme.secondary)}
+          ${svgRose(296, 122, 11, theme.secondary, theme.primary)}
+          ${svgRose(326, 150, 9.5, theme.accent, theme.primary)}
+          ${svgRose(278, 118, 9, theme.primary, theme.accent)}
+        `;
+      }
+
+      // 5. Ribbon Layer
+      let ribbonSvg = '';
+      const shouldShowRibbon = ribbonColor && ribbonColor !== 'none' && (cfg.hasRibbon !== undefined ? cfg.hasRibbon : model.hasRibbon);
+      if (shouldShowRibbon || (ribbonColor && ribbonColor !== 'none' && model.hasRibbon)) {
+        if (model.ribbonPos === 'top-center') {
+          ribbonSvg = svgRibbonBow(200, 108, ribbonColor, 1.0);
+        } else if (model.ribbonPos === 'top-right') {
+          ribbonSvg = svgRibbonBow(248, 114, ribbonColor, 0.95);
+        } else {
+          ribbonSvg = svgRibbonBow(92, 124, ribbonColor, 1.0);
+        }
+      } else if (ribbonColor && ribbonColor !== 'none' && cfg.forceShowRibbon) {
+        ribbonSvg = svgRibbonBow(200, 112, ribbonColor, 0.95);
+      }
+
+      // 6. Live Greeting Typography Layer
+      const textColor = getContrastingTextColor(boardColor, model.isMirror);
+      const fontMeta = FONT_STYLES.find(f => f.id === cfg.fontStyle) || FONT_STYLES[0];
+      const headerLines = wrapTextLines(cfg.headerText || 'Happy Wedding', textZone.maxChars);
+      const recipLines = wrapTextLines(cfg.recipientText || 'Raka & Nisa', textZone.maxChars);
+      const senderLines = wrapTextLines(cfg.senderText || '', textZone.maxChars + 4);
+
+      const headerSvg = headerLines.map((line, idx) => `
+        <text x="${textZone.x}" y="${textZone.yHeader + idx * 16}" text-anchor="middle"
+          font-family="${fontMeta.fontFamily}" font-style="${fontMeta.fontStyle}"
+          font-weight="700" font-size="${isThumb ? 13 : 15}" fill="${textColor}"
+        >${escapeHtml(line)}</text>
+      `).join('');
+
+      const recipSvg = recipLines.map((line, idx) => `
+        <text x="${textZone.x}" y="${textZone.yRecip + idx * 17}" text-anchor="middle"
+          font-family="'Fredoka', sans-serif" font-weight="700"
+          font-size="${isThumb ? 13 : 15.5}" fill="${textColor}"
+        >${escapeHtml(line)}</text>
+      `).join('');
+
+      const senderSvg = senderLines.map((line, idx) => `
+        <text x="${textZone.x}" y="${textZone.ySender + idx * 13}" text-anchor="middle"
+          font-family="'Plus Jakarta Sans', sans-serif" font-weight="600"
+          font-size="${isThumb ? 9.5 : 10.5}" fill="${textColor}" opacity="0.88"
+        >${escapeHtml(line)}</text>
+      `).join('');
+
+      const textLayer = isThumb
+        ? `
+          <g opacity="0.55">
+            <rect x="${textZone.x - 30}" y="${textZone.yHeader - 4}" width="60" height="4.5" rx="2.2" fill="${textColor}"/>
+            <rect x="${textZone.x - 40}" y="${textZone.yRecip - 6}" width="80" height="5.5" rx="2.7" fill="${textColor}"/>
+          </g>
+        `
+        : `
+          <g id="live-text-layer">
+            ${model.isMirror ? `<rect x="${textZone.x - 74}" y="${textZone.yHeader - 18}" width="148" height="92" rx="12" fill="rgba(255,255,255,0.52)" />` : ''}
+            ${headerSvg}
+            ${recipSvg}
+            ${senderSvg}
+          </g>
+        `;
+
+      // 7. Free Stickers Layer (Vector Decorations)
+      let stickersSvg = '';
+      if (!isThumb && cfg.stickers && cfg.stickers.length) {
+        if (cfg.stickers.includes('Kupu-kupu kecil')) {
+          stickersSvg += `
+            <g transform="translate(262, 162) rotate(14)">
+              <ellipse cx="-5" cy="-4" rx="6" ry="4" fill="#FFD166" stroke="#D97706" stroke-width="0.8"/>
+              <ellipse cx="5" cy="-4" rx="6" ry="4" fill="#FFD166" stroke="#D97706" stroke-width="0.8"/>
+              <ellipse cx="-4" cy="3" rx="4.5" ry="3" fill="#FF85A6"/>
+              <ellipse cx="4" cy="3" rx="4.5" ry="3" fill="#FF85A6"/>
+              <rect x="-1" y="-6" width="2" height="12" rx="1" fill="#3B1D2A"/>
+            </g>
+            <g transform="translate(136, 208) rotate(-18) scale(0.8)">
+              <ellipse cx="-5" cy="-4" rx="6" ry="4" fill="#90CCF4" stroke="#2B8AE2" stroke-width="0.8"/>
+              <ellipse cx="5" cy="-4" rx="6" ry="4" fill="#90CCF4" stroke="#2B8AE2" stroke-width="0.8"/>
+              <rect x="-1" y="-6" width="2" height="12" rx="1" fill="#3B1D2A"/>
+            </g>
+          `;
+        }
+        if (cfg.stickers.includes('Pita Estetik')) {
+          stickersSvg += svgRibbonBow(256, 134, '#FF6B8B', 0.72);
+        }
+        if (cfg.stickers.includes('Topi Wisuda')) {
+          stickersSvg += `
+            <g transform="translate(${textZone.x}, ${textZone.yHeader - 28})">
+              <polygon points="0,-10 16,-3 0,4 -16,-3" fill="#1E293B" stroke="#FFD166" stroke-width="1"/>
+              <path d="M -8 1 L -8 7 Q 0 11 8 7 L 8 1" fill="#334155"/>
+              <line x1="12" y1="-2" x2="14" y2="8" stroke="#FFD166" stroke-width="1.6"/>
+              <circle cx="14" cy="9" r="2" fill="#FFD166"/>
+            </g>
+          `;
+        }
+        if (cfg.stickers.includes('Cincin Nikah')) {
+          stickersSvg += `
+            <g transform="translate(${textZone.x}, ${textZone.yHeader - 26})">
+              <circle cx="-5" cy="0" r="6.5" fill="none" stroke="#F59E0B" stroke-width="2.4"/>
+              <circle cx="5" cy="0" r="6.5" fill="none" stroke="#FBBF24" stroke-width="2.4"/>
+              <polygon points="5,-9 8,-6 5,-3 2,-6" fill="#E0F2FE" stroke="#38BDF8" stroke-width="0.7"/>
+            </g>
+          `;
+        }
+      }
+
+      // 8. Paid Add-On: Spotlight Beams
+      const spotlightSvg = hasSpotlight
+        ? `
+          <g id="spotlight-addon">
+            <polygon points="90,415 160,115 225,115 115,415" fill="url(#${spotGradId})" opacity="0.52"/>
+            <polygon points="310,415 240,115 175,115 285,415" fill="url(#${spotGradId})" opacity="0.52"/>
+            <rect x="78" y="408" width="22" height="14" rx="4" fill="#2D2D33"/>
+            <circle cx="89" cy="408" r="5" fill="#FFD166"/>
+            <rect x="300" y="408" width="22" height="14" rx="4" fill="#2D2D33"/>
+            <circle cx="311" cy="408" r="5" fill="#FFD166"/>
+          </g>
+        `
+        : '';
+
+      const svgViewBox = isThumb ? '48 75 304 365' : '0 0 400 450';
+      return `
+        <svg viewBox="${svgViewBox}" class="w-full h-auto select-none drop-shadow-[0_10px_18px_rgba(59,29,42,0.12)]" role="img" aria-label="Ilustrasi papan bunga ${escapeHtml(model.name)}">
+          <defs>
+            <linearGradient id="${mirrorGradId}" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#D4E4EE"/>
+              <stop offset="45%" stop-color="#F6FAFC"/>
+              <stop offset="100%" stop-color="#C5D9E6"/>
+            </linearGradient>
+            <linearGradient id="${spotGradId}" x1="0%" y1="100%" x2="0%" y2="0%">
+              <stop offset="0%" stop-color="#FFE082" stop-opacity="0.85"/>
+              <stop offset="100%" stop-color="#FFE082" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- Soft Ground Shadow -->
+          <ellipse cx="200" cy="428" rx="115" ry="12" fill="rgba(59,29,42,0.1)"/>
+          ${easelSvg}
+          ${tulleSvg}
+          ${boardSvg}
+          ${flowersSvg}
+          ${ribbonSvg}
+          ${textLayer}
+          ${stickersSvg}
+          ${spotlightSvg}
+        </svg>
+      `;
+    }
+
+    // 5. UI RENDERERS & INTERACTION HANDLERS
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const bg = type === 'error'
+        ? 'bg-[#FFE4EA] border-[#FF6B8B] text-[#8F1D3A]'
+        : type === 'success'
+        ? 'bg-[#ECFDF3] border-[#25D366] text-[#1B4332]'
+        : 'bg-white border-[#FFD166] text-berry';
+      toast.className = `pointer-events-auto px-4 py-3 rounded-2xl border-2 shadow-lg text-xs sm:text-sm font-semibold transition-all ${bg}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(6px)';
+        setTimeout(() => toast.remove(), 220);
+      }, 3200);
+    }
+
+    function switchAppMode(mode) {
+      state.mode = mode;
+      const customizerView = document.getElementById('view-customizer');
+      const rekapView = document.getElementById('view-rekap');
+      const btnCust = document.getElementById('mode-btn-customizer');
+      const btnRekap = document.getElementById('mode-btn-rekap');
+
+      if (mode === 'customizer') {
+        customizerView.classList.remove('hidden');
+        rekapView.classList.add('hidden');
+        btnCust.className = 'btn-game btn-coral flex-1 sm:flex-none px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-[11px] sm:text-sm font-semibold whitespace-nowrap cursor-pointer min-h-[42px] flex items-center justify-center gap-1.5';
+        btnRekap.className = 'btn-game bg-white border-2 border-[#F0D8E0] text-berry flex-1 sm:flex-none px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-[11px] sm:text-sm font-semibold whitespace-nowrap cursor-pointer min-h-[42px] flex items-center justify-center gap-1.5';
+      } else {
+        customizerView.classList.add('hidden');
+        rekapView.classList.remove('hidden');
+        btnRekap.className = 'btn-game btn-sage flex-1 sm:flex-none px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-[11px] sm:text-sm font-semibold whitespace-nowrap cursor-pointer min-h-[42px] flex items-center justify-center gap-1.5';
+        btnCust.className = 'btn-game bg-white border-2 border-[#F0D8E0] text-berry flex-1 sm:flex-none px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-[11px] sm:text-sm font-semibold whitespace-nowrap cursor-pointer min-h-[42px] flex items-center justify-center gap-1.5';
+        renderRekapList();
+      }
+    }
+
+    function switchWardrobeTab(tabId) {
+      state.activeTab = tabId;
+      const tabs = ['catalog', 'colors', 'text', 'addons', 'checkout'];
+      tabs.forEach(t => {
+        const panel = document.getElementById(`tab-panel-${t}`);
+        const btn = document.getElementById(`tab-btn-${t}`);
+        const active = t === tabId;
+        panel.classList.toggle('hidden', !active);
+        btn.setAttribute('aria-selected', active ? 'true' : 'false');
+        btn.className = active
+          ? 'btn-game btn-coral px-3 py-2 rounded-2xl text-xs sm:text-[13px] font-semibold whitespace-nowrap shrink-0 cursor-pointer min-h-[42px] flex items-center gap-1.5'
+          : 'btn-game bg-white border-2 border-[#F0D8E0] text-berry px-3 py-2 rounded-2xl text-xs sm:text-[13px] font-semibold whitespace-nowrap shrink-0 cursor-pointer min-h-[42px] flex items-center gap-1.5';
+      });
+      if (tabId === 'checkout') {
+        renderCheckoutInvoicePreview();
+      }
+    }
+
+    function renderStage(animatePop = false) {
+      const model = getModelById(state.modelId);
+      const totals = calculateTotals(model.price, state.addOns);
+
+      document.getElementById('stage-model-name').textContent = model.name;
+      const priceEl = document.getElementById('stage-price-badge');
+      priceEl.textContent = `Harga Sewa: ${formatRupiah(totals.totalPrice)}`;
+      if (animatePop) {
+        priceEl.classList.remove('animate-price-pop');
+        void priceEl.offsetWidth;
+        priceEl.classList.add('animate-price-pop');
+      }
+
+      const wrapper = document.getElementById('stage-svg-wrapper');
+      wrapper.innerHTML = renderBoardSVG(state, false);
+      if (animatePop) {
+        wrapper.classList.remove('animate-board-pop');
+        void wrapper.offsetWidth;
+        wrapper.classList.add('animate-board-pop');
+      }
+
+      const addOnText = state.addOns.length
+        ? state.addOns.map(id => ADDON_OPTIONS.find(a => a.id === id)?.name).join(' + ')
+        : 'Tanpa Add-On';
+      document.getElementById('stage-summary-meta').textContent = `${model.name} • ${addOnText}`;
+
+      if (state.activeTab === 'checkout') {
+        renderCheckoutInvoicePreview();
+      }
+    }
+
+    function selectCatalogModel(modelId) {
+      const model = getModelById(modelId);
+      if (model.locked) {
+        showToast('Desain rahasia berikutnya lagi dirangkai di studio FLORDE.ZAR! Segera hadir 🌸', 'info');
+        return;
+      }
+      state.modelId = model.id;
+      state.boardColor = model.defaultBoardColor;
+      state.flowerTheme = model.defaultFlowerTheme;
+      state.ribbonColor = model.defaultRibbonColor;
+      state.tulleColor = model.tulleColor || 'none';
+      state.hasRibbon = model.hasRibbon;
+      state.forceShowRibbon = false;
+
+      const colorPicker = document.getElementById('custom-board-color-picker');
+      if (colorPicker) colorPicker.value = state.boardColor;
+
+      renderCatalogGrid();
+      renderColorCustomizer();
+      renderStage(true);
+    }
+
+    function resetCustomToCatalog() {
+      selectCatalogModel(state.modelId);
+      showToast('Tampilan dikembalikan ke desain asli katalog!', 'success');
+    }
+
+    function renderCatalogGrid() {
+      const grid = document.getElementById('catalog-grid');
+      grid.innerHTML = CATALOG_MODELS.map(m => {
+        if (m.locked) {
+          return `
+            <button
+              type="button"
+              onclick="selectCatalogModel('${m.id}')"
+              aria-label="Coming Soon desain rahasia"
+              class="group text-left rounded-2xl border-2 border-dashed border-[#E0A92D] bg-[#FFFBEB] p-3 transition-transform hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between min-h-[168px]"
+            >
+              <div class="w-full h-24 rounded-xl bg-[#FFD166] flex flex-col items-center justify-center text-berry shadow-inner">
+                <span class="text-2xl" aria-hidden="true">🔒</span>
+                <span class="font-display font-bold text-xs tracking-wide mt-1">COMING SOON</span>
+              </div>
+              <div class="mt-2.5">
+                <p class="font-display font-bold text-sm text-berry leading-tight">Coming Soon (???)</p>
+                <p class="text-xs font-bold text-[#9C6B08] mt-0.5">Harga: ???</p>
+              </div>
+            </button>
+          `;
+        }
+        const isSelected = state.modelId === m.id;
+        return `
+          <button
+            type="button"
+            onclick="selectCatalogModel('${m.id}')"
+            aria-pressed="${isSelected}"
+            aria-label="Pilih model ${escapeHtml(m.name)} (${formatRupiah(m.price)})"
+            class="text-left rounded-2xl border-2 p-2.5 transition-all cursor-pointer flex flex-col justify-between ${
+              isSelected
+                ? 'border-[#FF6B8B] bg-[#FFF0F4] ring-2 ring-[#FF6B8B]/30 shadow-md -translate-y-0.5'
+                : 'border-[#F2DDE5] bg-[#FFFDFB] hover:border-[#FF6B8B]/60 hover:-translate-y-0.5'
+            }"
+          >
+            <div class="w-full h-28 rounded-xl bg-[#F4F9F5] flex items-center justify-center p-1 overflow-hidden">
+              <div class="w-24 sm:w-28">
+                ${renderBoardSVG({ modelId: m.id, boardColor: m.defaultBoardColor, flowerTheme: m.defaultFlowerTheme, ribbonColor: m.defaultRibbonColor, tulleColor: m.tulleColor, hasRibbon: m.hasRibbon, headerText: m.name }, true)}
+              </div>
+            </div>
+            <div class="mt-2">
+              <div class="flex items-center justify-between gap-1">
+                <p class="font-display font-bold text-sm text-berry leading-tight truncate">${escapeHtml(m.name)}</p>
+                ${isSelected ? '<span class="text-xs" aria-hidden="true">✅</span>' : ''}
+              </div>
+              <p class="text-xs font-extrabold text-[#2D6A4F] tabular-nums mt-0.5">${formatRupiah(m.price)}</p>
+            </div>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function setBoardColor(hex) {
+      state.boardColor = hex;
+      const picker = document.getElementById('custom-board-color-picker');
+      if (picker) picker.value = hex;
+      renderColorCustomizer();
+      renderStage(true);
+    }
+
+    function setFlowerTheme(themeKey) {
+      state.flowerTheme = themeKey;
+      renderColorCustomizer();
+      renderStage(true);
+    }
+
+    function setRibbonAndTulle(hex) {
+      state.ribbonColor = hex;
+      state.tulleColor = hex;
+      state.forceShowRibbon = hex !== 'none';
+      renderColorCustomizer();
+      renderStage(true);
+    }
+
+    function renderColorCustomizer() {
+      const swatchEl = document.getElementById('board-color-swatches');
+      swatchEl.innerHTML = BOARD_SWATCHES.map(s => {
+        const active = state.boardColor.toLowerCase() === s.hex.toLowerCase();
+        return `
+          <button
+            type="button"
+            onclick="setBoardColor('${s.hex}')"
+            aria-label="Warna papan ${s.name}"
+            aria-pressed="${active}"
+            class="flex flex-col items-center gap-1 p-1.5 rounded-xl border-2 cursor-pointer transition-all ${
+              active ? 'border-[#FF6B8B] bg-[#FFF0F4]' : 'border-[#F2DDE5] bg-white hover:border-[#FF6B8B]/50'
+            }"
+          >
+            <span class="w-7 h-7 rounded-full border border-black/15 shadow-inner" style="background-color: ${s.hex}"></span>
+            <span class="text-[10px] font-semibold text-berry truncate w-full text-center">${s.name}</span>
+          </button>
+        `;
+      }).join('');
+
+      const flowerEl = document.getElementById('flower-theme-grid');
+      flowerEl.innerHTML = Object.entries(FLOWER_THEMES).map(([key, t]) => {
+        const active = state.flowerTheme === key;
+        return `
+          <button
+            type="button"
+            onclick="setFlowerTheme('${key}')"
+            aria-pressed="${active}"
+            class="p-2.5 rounded-2xl border-2 text-left cursor-pointer transition-all ${
+              active ? 'border-[#FF6B8B] bg-[#FFF0F4]' : 'border-[#F2DDE5] bg-white hover:border-[#FF6B8B]/50'
+            }"
+          >
+            <div class="flex items-center gap-1 mb-1.5">
+              <span class="w-4 h-4 rounded-full border border-black/10" style="background:${t.primary}"></span>
+              <span class="w-4 h-4 rounded-full border border-black/10" style="background:${t.secondary}"></span>
+              <span class="w-4 h-4 rounded-full border border-black/10" style="background:${t.leaf}"></span>
+            </div>
+            <span class="text-xs font-bold text-berry block leading-tight">${t.label}</span>
+          </button>
+        `;
+      }).join('');
+
+      const ribbonEl = document.getElementById('ribbon-color-grid');
+      ribbonEl.innerHTML = RIBBON_OPTIONS.map(r => {
+        const active = state.ribbonColor === r.hex;
+        return `
+          <button
+            type="button"
+            onclick="setRibbonAndTulle('${r.hex}')"
+            aria-pressed="${active}"
+            class="px-3 py-2 rounded-xl border-2 text-xs font-semibold cursor-pointer inline-flex items-center gap-2 min-h-[40px] ${
+              active ? 'border-[#FF6B8B] bg-[#FFF0F4] text-berry' : 'border-[#F2DDE5] bg-white text-berry hover:border-[#FF6B8B]/50'
+            }"
+          >
+            ${r.hex !== 'none'
+              ? `<span class="w-4 h-4 rounded-full border border-black/15" style="background:${r.hex}"></span>`
+              : '<span aria-hidden="true">🚫</span>'
+            }
+            <span>${r.name}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function applyGreetingTemplate(idx) {
+      const tpl = GREETING_TEMPLATES[idx];
+      if (!tpl) return;
+      state.headerText = tpl.header;
+      state.recipientText = tpl.recipient;
+      state.senderText = tpl.sender;
+      document.getElementById('input-header-text').value = tpl.header;
+      document.getElementById('input-recipient-text').value = tpl.recipient;
+      document.getElementById('input-sender-text').value = tpl.sender;
+      renderStage(true);
+    }
+
+    function updateGreetingText(field, val) {
+      state[field] = val;
+      renderStage(false);
+    }
+
+    function setFontStyle(fontId) {
+      state.fontStyle = fontId;
+      renderTextTabControls();
+      renderStage(true);
+    }
+
+    function renderTextTabControls() {
+      const tplEl = document.getElementById('greeting-templates');
+      tplEl.innerHTML = GREETING_TEMPLATES.map((t, i) => `
+        <button
+          type="button"
+          onclick="applyGreetingTemplate(${i})"
+          class="btn-game bg-[#FFF8F3] border-2 border-[#F0D8E0] hover:border-[#FF6B8B] text-berry px-3 py-2 rounded-xl text-xs font-semibold cursor-pointer min-h-[40px]"
+        >
+          ${t.label}
+        </button>
+      `).join('');
+
+      const fontEl = document.getElementById('font-style-grid');
+      fontEl.innerHTML = FONT_STYLES.map(f => {
+        const active = state.fontStyle === f.id;
+        return `
+          <button
+            type="button"
+            onclick="setFontStyle('${f.id}')"
+            aria-pressed="${active}"
+            class="p-3 rounded-2xl border-2 text-center cursor-pointer transition-all ${
+              active ? 'border-[#FF6B8B] bg-[#FFF0F4]' : 'border-[#F2DDE5] bg-white hover:border-[#FF6B8B]/50'
+            }"
+          >
+            <span class="block text-xl font-bold text-berry" style="font-family:${f.fontFamily}; font-style:${f.fontStyle};">${f.sample}</span>
+            <span class="block text-[11px] font-semibold text-[#7A5563] mt-1">${f.name}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function toggleSticker(stickerId) {
+      const idx = state.stickers.indexOf(stickerId);
+      if (idx >= 0) {
+        state.stickers.splice(idx, 1);
+      } else {
+        state.stickers.push(stickerId);
+      }
+      renderStickersAndAddons();
+      renderStage(true);
+    }
+
+    function toggleAddOn(addonId) {
+      const idx = state.addOns.indexOf(addonId);
+      if (idx >= 0) {
+        state.addOns.splice(idx, 1);
+      } else {
+        state.addOns.push(addonId);
+      }
+      renderStickersAndAddons();
+      renderStage(true);
+    }
+
+    function renderStickersAndAddons() {
+      const stickEl = document.getElementById('stickers-grid');
+      stickEl.innerHTML = FREE_STICKERS.map(s => {
+        const active = state.stickers.includes(s.id);
+        return `
+          <button
+            type="button"
+            onclick="toggleSticker('${s.id}')"
+            aria-pressed="${active}"
+            class="p-3 rounded-2xl border-2 text-center cursor-pointer transition-all flex flex-col items-center justify-center min-h-[88px] ${
+              active ? 'border-[#FF6B8B] bg-[#FFF0F4] shadow-sm' : 'border-[#F2DDE5] bg-white hover:border-[#FF6B8B]/50'
+            }"
+          >
+            <span class="text-2xl" aria-hidden="true">${s.icon}</span>
+            <span class="text-xs font-bold text-berry mt-1.5 leading-tight">${s.label}</span>
+            <span class="text-[10px] font-semibold text-[#2D6A4F] mt-0.5">${active ? 'Dipasang ✓' : 'Gratis'}</span>
+          </button>
+        `;
+      }).join('');
+
+      const addonEl = document.getElementById('addons-grid');
+      addonEl.innerHTML = ADDON_OPTIONS.map(a => {
+        const active = state.addOns.includes(a.id);
+        return `
+          <button
+            type="button"
+            onclick="toggleAddOn('${a.id}')"
+            aria-pressed="${active}"
+            class="p-3.5 rounded-2xl border-2 text-left cursor-pointer transition-all flex items-start justify-between gap-3 ${
+              active ? 'border-[#2D6A4F] bg-[#ECFDF3] shadow-sm' : 'border-[#F2DDE5] bg-white hover:border-[#2D6A4F]/50'
+            }"
+          >
+            <div>
+              <p class="font-display font-bold text-sm text-berry">${a.name}</p>
+              <p class="text-xs text-[#7A5563] mt-0.5">${a.desc}</p>
+              <p class="text-xs font-extrabold text-[#2D6A4F] tabular-nums mt-1.5">+${formatRupiah(a.price)}</p>
+            </div>
+            <span class="px-2.5 py-1 rounded-xl text-[11px] font-bold shrink-0 ${
+              active ? 'bg-[#2D6A4F] text-white' : 'bg-[#FFF0F4] text-berry'
+            }">
+              ${active ? 'Aktif ✓' : 'Pilih'}
+            </span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function updateCustomerField(field, val) {
+      state[field] = val;
+      if (state.activeTab === 'checkout') {
+        renderCheckoutInvoicePreview();
+      }
+    }
+
+    function buildInvoiceCardHtml(inv, includeThumb = true) {
+      const model = getModelById(inv.modelId);
+      const addOnHtml = inv.addOns && inv.addOns.length
+        ? inv.addOns.map(id => {
+            const ao = ADDON_OPTIONS.find(x => x.id === id);
+            return ao ? `
+              <div class="flex justify-between text-xs text-[#5E414C]">
+                <span>+ ${escapeHtml(ao.name)}</span>
+                <span class="font-semibold tabular-nums">${formatRupiah(ao.price)}</span>
+              </div>
+            ` : '';
+          }).join('')
+        : '<div class="text-xs text-[#8E6C78]">Tidak ada add-on tambahan</div>';
+
+      return `
+        <div class="flex items-start justify-between gap-3 border-b-2 border-dashed border-[#F0D8E0] pb-3">
+          <div>
+            <p class="font-display font-bold text-base text-berry">FLORDE.ZAR 🌸</p>
+            <p class="text-[11px] font-semibold text-[#7A5563]">Sewa Papan Ucapan Padang • From Heart To Bloom</p>
+          </div>
+          <div class="text-right">
+            <span class="inline-block px-2.5 py-0.5 rounded-lg bg-[#FFD166] text-berry font-mono text-xs font-bold">${escapeHtml(inv.invoiceNumber)}</span>
+            <p class="text-[10px] text-[#7A5563] mt-1">DIGITAL INVOICE</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center py-1">
+          ${includeThumb ? `
+            <div class="sm:col-span-4 rounded-2xl bg-[#F4F9F5] p-2 flex items-center justify-center border border-[#E2EFE6]">
+              <div class="w-24">
+                ${renderBoardSVG(inv, true)}
+              </div>
+            </div>
+          ` : ''}
+          <div class="${includeThumb ? 'sm:col-span-8' : 'sm:col-span-12'} space-y-1.5 text-xs">
+            <p><span class="font-bold text-berry">Pemesan:</span> ${escapeHtml(inv.customerName || '-')}</p>
+            <p><span class="font-bold text-berry">No. WA:</span> ${escapeHtml(inv.customerPhone || '-')}</p>
+            <p><span class="font-bold text-berry">Jadwal Acara:</span> ${escapeHtml(inv.eventDateTime || '-')}</p>
+            <p><span class="font-bold text-berry">Alamat Padang:</span> ${escapeHtml(inv.deliveryAddress || '-')}</p>
+          </div>
+        </div>
+
+        <div class="rounded-2xl bg-[#FFF5F8] p-3 space-y-1 text-xs border border-[#F6DCE5]">
+          <p class="font-bold text-berry">Detail Desain &amp; Ucapan:</p>
+          <p>Model: <span class="font-semibold">${escapeHtml(inv.modelName || model.name)}</span> (${escapeHtml(FLOWER_THEMES[inv.flowerTheme]?.label || inv.flowerTheme)})</p>
+          <p>Ucapan: <span class="font-semibold">"${escapeHtml(inv.headerText)} — ${escapeHtml(inv.recipientText)}"</span></p>
+          <p>Pengirim: <span class="font-semibold">${escapeHtml(inv.senderText || '-')}</span></p>
+          ${inv.stickers && inv.stickers.length ? `<p>Stiker Gratis: <span class="font-semibold">${escapeHtml(inv.stickers.join(', '))}</span></p>` : ''}
+        </div>
+
+        <div class="space-y-1.5 pt-1">
+          <div class="flex justify-between text-xs text-berry">
+            <span>Sewa Papan (${escapeHtml(inv.modelName || model.name)})</span>
+            <span class="font-bold tabular-nums">${formatRupiah(inv.basePrice)}</span>
+          </div>
+          ${addOnHtml}
+          <div class="flex justify-between items-center pt-2 border-t border-[#F0D8E0]">
+            <span class="font-display font-bold text-sm text-berry">Total Biaya Sewa</span>
+            <span class="font-display font-bold text-lg text-[#2D6A4F] tabular-nums">${formatRupiah(inv.totalPrice)}</span>
+          </div>
+        </div>
+
+        <p class="text-[11px] leading-relaxed text-[#7A5563] italic bg-[#FFF8F3] p-2.5 rounded-xl border border-[#F3E2D8]">
+          *Harga tercantum merupakan biaya sewa dan belum termasuk ongkos kirim (dihitung admin berdasarkan lokasi pemasangan).
+        </p>
+      `;
+    }
+
+    function renderCheckoutInvoicePreview() {
+      const model = getModelById(state.modelId);
+      const totals = calculateTotals(model.price, state.addOns);
+      state.previewInvoiceNumber = generateInvoiceNumber(state.invoices);
+
+      const draftRecord = {
+        invoiceNumber: state.previewInvoiceNumber,
+        modelId: state.modelId,
+        modelName: model.name,
+        basePrice: totals.basePrice,
+        boardColor: state.boardColor,
+        flowerTheme: state.flowerTheme,
+        ribbonColor: state.ribbonColor,
+        tulleColor: state.tulleColor,
+        hasRibbon: state.hasRibbon,
+        headerText: state.headerText,
+        recipientText: state.recipientText,
+        senderText: state.senderText,
+        fontStyle: state.fontStyle,
+        stickers: [...state.stickers],
+        addOns: [...state.addOns],
+        addOnsTotal: totals.addOnsTotal,
+        totalPrice: totals.totalPrice,
+        customerName: state.customerName,
+        customerPhone: state.customerPhone,
+        eventDateTime: state.eventDateTime,
+        deliveryAddress: state.deliveryAddress
+      };
+
+      document.getElementById('digital-invoice-capture').innerHTML = buildInvoiceCardHtml(draftRecord, true);
+    }
+
+    function showFieldError(id, msg) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (msg) {
+        el.textContent = msg;
+        el.classList.remove('hidden');
+      } else {
+        el.textContent = '';
+        el.classList.add('hidden');
+      }
+    }
+
+    function handleCheckoutSubmit(event) {
+      event.preventDefault();
+      const name = document.getElementById('cust-name').value.trim();
+      const phone = document.getElementById('cust-phone').value.trim();
+      const dt = document.getElementById('cust-datetime').value.trim();
+      const addr = document.getElementById('cust-address').value.trim();
+
+      state.customerName = name;
+      state.customerPhone = phone;
+      state.eventDateTime = dt;
+      state.deliveryAddress = addr;
+
+      const errors = {};
+      if (!name) errors.name = 'Nama pemesan wajib diisi.';
+      if (phone.replace(/\D/g, '').length < 9) errors.phone = 'Nomor WhatsApp minimal 9 digit.';
+      if (!dt) errors.dt = 'Tanggal & jam acara wajib diisi.';
+      if (addr.length < 6) errors.addr = 'Alamat lengkap area Padang wajib diisi.';
+
+      showFieldError('err-cust-name', errors.name);
+      showFieldError('err-cust-phone', errors.phone);
+      showFieldError('err-cust-datetime', errors.dt);
+      showFieldError('err-cust-address', errors.addr);
+
+      if (Object.keys(errors).length > 0) {
+        showToast('Mohon lengkapi data pemesan terlebih dahulu.', 'error');
+        return;
+      }
+
+      const model = getModelById(state.modelId);
+      const totals = calculateTotals(model.price, state.addOns);
+      const invNumber = generateInvoiceNumber(state.invoices);
+
+      const newInvoice = {
+        invoiceNumber: invNumber,
+        createdAt: new Date().toISOString(),
+        modelId: model.id,
+        modelName: model.name,
+        basePrice: totals.basePrice,
+        boardColor: state.boardColor,
+        flowerTheme: state.flowerTheme,
+        ribbonColor: state.ribbonColor,
+        tulleColor: state.tulleColor,
+        hasRibbon: state.hasRibbon,
+        headerText: state.headerText,
+        recipientText: state.recipientText,
+        senderText: state.senderText,
+        fontStyle: state.fontStyle,
+        stickers: [...state.stickers],
+        addOns: [...state.addOns],
+        addOnsTotal: totals.addOnsTotal,
+        totalPrice: totals.totalPrice,
+        customerName: name,
+        customerPhone: phone,
+        eventDateTime: dt,
+        deliveryAddress: addr,
+        source: 'customizer'
+      };
+
+      state.invoices.unshift(newInvoice);
+      saveInvoicesToStorage(state.invoices);
+      updateInvoiceBadgeCount();
+      renderCheckoutInvoicePreview();
+
+      const waUrl = buildWhatsAppUrl(newInvoice);
+      state.lastWhatsAppMessage = buildWhatsAppMessage(newInvoice);
+
+      const readyBox = document.getElementById('checkout-wa-ready');
+      document.getElementById('checkout-wa-ready-sub').textContent = `Nomor ${invNumber} (${formatRupiah(newInvoice.totalPrice)}) tersimpan di riwayat.`;
+      const linkEl = document.getElementById('checkout-wa-direct-link');
+      linkEl.href = waUrl;
+      readyBox.classList.remove('hidden');
+
+      showToast(`Invoice ${invNumber} berhasil disimpan!`, 'success');
+
+      // Trigger safe anchor navigation without window.open
+      const tempA = document.createElement('a');
+      tempA.href = waUrl;
+      tempA.target = '_blank';
+      tempA.rel = 'noopener noreferrer';
+      document.body.appendChild(tempA);
+      tempA.click();
+      tempA.remove();
+    }
+
+    function copyLastWhatsAppMessage() {
+      if (!state.lastWhatsAppMessage) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(state.lastWhatsAppMessage).then(() => {
+          showToast('Pesan order WhatsApp berhasil disalin!', 'success');
+        }).catch(() => {
+          showToast('Silakan salin dari tombol Buka WhatsApp Admin.', 'info');
+        });
+      }
+    }
+
+    async function downloadInvoicePng(elementId, invoiceNumber) {
+      const target = document.getElementById(elementId);
+      if (!target) return;
+      if (typeof html2canvas === 'undefined') {
+        showToast('Library html2canvas sedang dimuat, coba sebentar lagi.', 'error');
+        return;
+      }
+      try {
+        showToast('Sedang membuat gambar PNG invoice...', 'info');
+        const canvas = await html2canvas(target, {
+          scale: 2,
+          backgroundColor: '#FFFDFB',
+          useCORS: true
+        });
+        const link = document.createElement('a');
+        link.download = `Invoice-FLORDE-ZAR-${invoiceNumber || 'draft'}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast('Gambar invoice PNG berhasil diunduh!', 'success');
+      } catch (err) {
+        showToast('Gagal mengonversi invoice ke PNG.', 'error');
+      }
+    }
+
+    // 6. MODE 2: ADMIN REKAP & MANUAL INPUT INVOICE
+    function populateAdminModelSelect() {
+      const sel = document.getElementById('admin-model');
+      sel.innerHTML = CATALOG_MODELS.filter(m => !m.locked).map(m =>
+        `<option value="${m.id}">${escapeHtml(m.name)} — ${formatRupiah(m.price)}</option>`
+      ).join('');
+      updateAdminPreviewPrice();
+    }
+
+    function updateAdminPreviewPrice() {
+      const modelId = document.getElementById('admin-model').value;
+      const model = getModelById(modelId);
+      const addOns = [];
+      if (document.getElementById('admin-addon-lampu').checked) addOns.push('lampu-sorot');
+      if (document.getElementById('admin-addon-express').checked) addOns.push('express-order');
+      const totals = calculateTotals(model.price, addOns);
+      document.getElementById('admin-total-preview').textContent = formatRupiah(totals.totalPrice);
+    }
+
+    function handleAdminInvoiceSubmit(event) {
+      event.preventDefault();
+      const modelId = document.getElementById('admin-model').value;
+      const model = getModelById(modelId);
+      const custName = document.getElementById('admin-cust-name').value.trim();
+      const custPhone = document.getElementById('admin-cust-phone').value.trim();
+      const dt = document.getElementById('admin-datetime').value.trim();
+      const addr = document.getElementById('admin-address').value.trim();
+      const header = document.getElementById('admin-header').value.trim() || 'Congratulation';
+      const recipient = document.getElementById('admin-recipient').value.trim();
+      const sender = document.getElementById('admin-sender').value.trim();
+
+      const errEl = document.getElementById('admin-form-error');
+      if (!custName || custPhone.replace(/\D/g, '').length < 9 || !dt || !addr || !recipient) {
+        errEl.textContent = 'Nama pemesan, No. WA (min 9 digit), jadwal acara, alamat Padang, dan nama penerima wajib diisi.';
+        errEl.classList.remove('hidden');
+        return;
+      }
+      errEl.classList.add('hidden');
+
+      const addOns = [];
+      if (document.getElementById('admin-addon-lampu').checked) addOns.push('lampu-sorot');
+      if (document.getElementById('admin-addon-express').checked) addOns.push('express-order');
+      const totals = calculateTotals(model.price, addOns);
+      const invNumber = generateInvoiceNumber(state.invoices);
+
+      const newRecord = {
+        invoiceNumber: invNumber,
+        createdAt: new Date().toISOString(),
+        modelId: model.id,
+        modelName: model.name,
+        basePrice: totals.basePrice,
+        boardColor: model.defaultBoardColor,
+        flowerTheme: model.defaultFlowerTheme,
+        ribbonColor: model.defaultRibbonColor,
+        tulleColor: model.tulleColor || 'none',
+        hasRibbon: model.hasRibbon,
+        headerText: header,
+        recipientText: recipient,
+        senderText: sender,
+        fontStyle: 'modern',
+        stickers: [],
+        addOns,
+        addOnsTotal: totals.addOnsTotal,
+        totalPrice: totals.totalPrice,
+        customerName: custName,
+        customerPhone: custPhone,
+        eventDateTime: dt,
+        deliveryAddress: addr,
+        source: 'admin'
+      };
+
+      state.invoices.unshift(newRecord);
+      saveInvoicesToStorage(state.invoices);
+      updateInvoiceBadgeCount();
+      renderRekapList();
+
+      document.getElementById('admin-invoice-form').reset();
+      document.getElementById('admin-header').value = 'Congratulation';
+      updateAdminPreviewPrice();
+      showToast(`Invoice manual ${invNumber} berhasil dicatat!`, 'success');
+    }
+
+    function updateInvoiceBadgeCount() {
+      document.getElementById('invoice-count-badge').textContent = state.invoices.length;
+    }
+
+    function renderRekapList() {
+      const query = (document.getElementById('rekap-search')?.value || '').trim().toLowerCase();
+      const filtered = state.invoices.filter(inv => {
+        if (!query) return true;
+        return (
+          (inv.invoiceNumber || '').toLowerCase().includes(query) ||
+          (inv.customerName || '').toLowerCase().includes(query) ||
+          (inv.modelName || '').toLowerCase().includes(query) ||
+          (inv.recipientText || '').toLowerCase().includes(query)
+        );
+      });
+
+      document.getElementById('rekap-stat-count').textContent = state.invoices.length;
+      const totalRev = state.invoices.reduce((sum, i) => sum + (Number(i.totalPrice) || 0), 0);
+      document.getElementById('rekap-stat-revenue').textContent = formatRupiah(totalRev);
+
+      const container = document.getElementById('rekap-list-container');
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="rounded-2xl border-2 border-dashed border-[#F0D8E0] p-8 text-center">
+            <p class="font-display font-bold text-base text-berry">Belum ada data invoice</p>
+            <p class="text-xs text-[#7A5563] mt-1">Catat invoice manual di sebelah kiri atau buat pesanan lewat Customizer.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(inv => `
+        <article class="rounded-2xl border-2 border-[#F2DDE5] bg-[#FFFDFB] p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="space-y-1 min-w-0">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-2 py-0.5 rounded-lg bg-[#FFD166] text-berry font-mono text-xs font-bold">${escapeHtml(inv.invoiceNumber)}</span>
+              <span class="text-xs font-bold text-[#2D6A4F]">${escapeHtml(inv.modelName)}</span>
+              <span class="text-xs text-[#9E7B87]" aria-hidden="true">•</span>
+              <span class="text-xs text-[#7A5563]">${escapeHtml(inv.eventDateTime)}</span>
+            </div>
+            <p class="font-display font-bold text-sm sm:text-base text-berry truncate">
+              ${escapeHtml(inv.customerName)} <span class="font-sans font-normal text-xs text-[#7A5563]">(${escapeHtml(inv.customerPhone)})</span>
+            </p>
+            <p class="text-xs text-[#5E414C] truncate">
+              "${escapeHtml(inv.headerText)} — ${escapeHtml(inv.recipientText)}" • ${escapeHtml(inv.deliveryAddress)}
+            </p>
+          </div>
+
+          <div class="flex sm:flex-col items-center sm:items-end justify-between gap-2 shrink-0">
+            <p class="font-display font-bold text-base sm:text-lg text-[#2D6A4F] tabular-nums">${formatRupiah(inv.totalPrice)}</p>
+            <div class="flex items-center gap-1.5">
+              <button
+                type="button"
+                onclick="openInvoiceModal('${escapeHtml(inv.invoiceNumber)}')"
+                aria-label="Lihat dan download PNG ${escapeHtml(inv.invoiceNumber)}"
+                class="px-2.5 py-1.5 rounded-xl bg-[#FFF0F4] hover:bg-[#FFE0EA] text-berry text-xs font-bold cursor-pointer min-h-[36px]"
+              >
+                👁️ PNG
+              </button>
+              <a
+                href="${buildWhatsAppUrl(inv)}"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Kirim ulang WhatsApp ${escapeHtml(inv.invoiceNumber)}"
+                class="px-2.5 py-1.5 rounded-xl bg-[#ECFDF3] hover:bg-[#D1FAE5] text-[#1B4332] text-xs font-bold min-h-[36px] inline-flex items-center"
+              >
+                💬 WA
+              </a>
+              <button
+                type="button"
+                onclick="deleteInvoice('${escapeHtml(inv.invoiceNumber)}')"
+                aria-label="Hapus invoice ${escapeHtml(inv.invoiceNumber)}"
+                class="px-2.5 py-1.5 rounded-xl bg-[#FEE2E2] hover:bg-[#FECACA] text-[#991B1B] text-xs font-bold cursor-pointer min-h-[36px]"
+              >
+                🗑️ Hapus
+              </button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function openInvoiceModal(invNumber) {
+      const inv = state.invoices.find(i => i.invoiceNumber === invNumber);
+      if (!inv) return;
+      document.getElementById('modal-invoice-capture').innerHTML = buildInvoiceCardHtml(inv, true);
+      document.getElementById('modal-download-png-btn').onclick = () => downloadInvoicePng('modal-invoice-capture', inv.invoiceNumber);
+      document.getElementById('modal-wa-link').href = buildWhatsAppUrl(inv);
+      document.getElementById('invoice-modal').classList.remove('hidden');
+    }
+
+    function closeInvoiceModal() {
+      document.getElementById('invoice-modal').classList.add('hidden');
+    }
+
+    function deleteInvoice(invNumber) {
+      state.invoices = state.invoices.filter(i => i.invoiceNumber !== invNumber);
+      saveInvoicesToStorage(state.invoices);
+      updateInvoiceBadgeCount();
+      renderRekapList();
+      showToast(`Invoice ${invNumber} dihapus dari rekap.`, 'info');
+    }
+
+    // 7. INITIALIZATION
+    function initApp() {
+      state.invoices = loadInvoicesFromStorage();
+      updateInvoiceBadgeCount();
+
+      // Sync initial greeting inputs
+      document.getElementById('input-header-text').value = state.headerText;
+      document.getElementById('input-recipient-text').value = state.recipientText;
+      document.getElementById('input-sender-text').value = state.senderText;
+
+      renderCatalogGrid();
+      renderColorCustomizer();
+      renderTextTabControls();
+      renderStickersAndAddons();
+      populateAdminModelSelect();
+      switchAppMode('customizer');
+      switchWardrobeTab('catalog');
+      renderStage(false);
+    }
+
+    document.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
